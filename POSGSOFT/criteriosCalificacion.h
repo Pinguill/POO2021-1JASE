@@ -18,10 +18,10 @@ class Criterio{
       string textoPresentado;
       float ponderado;
       string mensajeJurado;
-      string notaCriterio;
+      float notaCriterio;
    public:
       Criterio();
-      Criterio( string, string, float, string );
+      Criterio( string, string, float, string, float );
       void llenarCriterio();
       void escribirMensaje();
 };
