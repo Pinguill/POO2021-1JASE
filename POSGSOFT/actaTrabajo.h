@@ -1,3 +1,5 @@
+#ifndef ACTA_H
+#define ACTA_H
 #include <iostream>
 
 using std::string;
@@ -51,3 +53,4 @@ class ActaTrabajo
         void addComentario();    // Añade comentarios en caso de que los jurados lo deseen     
 
 };
+#endif
