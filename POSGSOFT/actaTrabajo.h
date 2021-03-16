@@ -1,24 +1,28 @@
 #ifndef ACTA_H
 #define ACTA_H
 #include <iostream>
+#include <vector>
+#include <ctime>
 
 using std::string;
+using std::vector;
+using std::time_t;
 
 
-enum class aceptacion   // Enum para saber la calificacion final del acta ( no calificacion puntual )
+enum aceptacion   // Enum para saber la calificacion final del acta ( no calificacion puntual )
 {
    ACEPTADO,
    RECHAZADO,
    PENDIENTE 
 };
 
-enum class estado   // Enum para el estado del acta
+enum estado   // Enum para el estado del acta
 {
     ABIERTA,
     CERRADA
 };
 
-enum class trabajo  // Enum para el tipo de trabajo
+enum trabajo  // Enum para el tipo de trabajo
 {
     APLICADO,
     INVESTIGACION
@@ -41,6 +45,7 @@ class ActaTrabajo
         string jurado2;    
         estado estadoTrabajo;   // Hace referencia a si el acta está abierta o cerrada
         aceptacion estadoAceptacion;    // Significa si está aprobado, rechazado o pendiente
+        vector <ActaTrabajo> actasCreadas;
         
     public:
         ActaTrabajo();
@@ -51,6 +56,7 @@ class ActaTrabajo
         void calificarCriterios();  
         int calificarNotaFinal();
         void addComentario();    // Añade comentarios en caso de que los jurados lo deseen     
+        void mostrarActa();
 
 };
 #endif

@@ -8,12 +8,6 @@
 using std::vector;
 using std::string;
 
-vector <string> identificador;
-vector <string> textoPresentado;
-vector <float> ponderado;
-vector <string> mensajeJurado;
-vector <float> notaCriterio;
-
 class Criterio{
    private:
       string identificador;

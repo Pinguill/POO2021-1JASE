@@ -3,13 +3,14 @@
 
 using std::cout;
 using std::cin;
+using std::getline;
 
 ActaTrabajo::ActaTrabajo()
 {
 
 }
 
-// Usamos este constructor cuando no hay codirector
+/* Usamos este constructor cuando no hay codirector, !--- Se quita por ahora, si no se necesita despues se borra ---!
 ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreTrabajo, trabajo tipoTrabajo, 
     string periodo, float notaFinal, string director, string jurado1, string jurado2, estado estadoTrabajo, 
     aceptacion estadoAceptacion )
@@ -28,6 +29,7 @@ ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreT
     this -> estadoTrabajo = estadoTrabajo;
     this -> estadoAceptacion = estadoAceptacion;
 }
+*/
 
 // Usamos este constructor cuando hay codirector
 ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreTrabajo, trabajo tipoTrabajo, 
@@ -44,21 +46,26 @@ ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreT
     this -> notaFinal = notaFinal;
     this -> director = director;
     this -> codirector = codirector;
-    this -> jurado1;
-    this -> jurado2;
+    this -> jurado1 = jurado1;
+    this -> jurado2 = jurado2;
     this -> estadoTrabajo = estadoTrabajo;
     this -> estadoAceptacion = estadoAceptacion;
 }
 
 void ActaTrabajo::crearActa()   
 {
+    int i = 0, contNumero = 1000; //Contador del numero de acta
+    time_t now = time( 0 );
+    char* dt = ctime( &now ); // Dt = day time, pasa la hora/dia actual a un char
     int opcTipoTrabajo;
     int existenciaCodirector;
+    fecha = dt;
+    numero = contNumero;
 
-    cout << "\nIngrese los siguientes datos\n";
-
-    cout << "\nNombre del autor: "; cin >> autor;
-    cout << "\nNombre del trabajo: "; cin >> nombreTrabajo;
+    cout << "\n!---Ingrese los siguientes datos---!\n";
+    cin.ignore(100,'\n');
+    cout << "\nNombre del autor: "; getline(cin, autor) ;
+    cout << "\nNombre del trabajo: "; getline(cin, nombreTrabajo);
 
     // Implementamos un mini-menu para establecer el tipo de trabajo 
     cout << "\nCual es el tipo de trabajo?\n";      
@@ -87,8 +94,8 @@ void ActaTrabajo::crearActa()
             cout << "\n\tERROR: Opcion no valida, intente de nuevo.\n";
         }
     }
-
-    cout << "\nDirector: "; cin >> director;
+    cin.ignore(100,'\n');
+    cout << "\nDirector: "; getline(cin, director);
     
     cout << "\nHay codirector?";
     cout << "\n0. No\n1. Si";
@@ -107,7 +114,8 @@ void ActaTrabajo::crearActa()
         else if( existenciaCodirector == 1 )  
         {
             existeCodirector = true;
-            cout << "\nCodirector: "; cin >> codirector;
+            cin.ignore(100,'\n');
+            cout << "\nCodirector: "; getline(cin, codirector);
             break;
         }
 
@@ -118,12 +126,14 @@ void ActaTrabajo::crearActa()
         }
     }
 
-    cout << "\nJurado 1: "; cin >> jurado1;
-    cout << "\nJurado 2: "; cin >> jurado2;
-    cout << "\nPeriodo: "; cin >> periodo;
+    cout << "\nJurado 1: "; getline(cin, jurado1);
+    cout << "\nJurado 2: "; getline(cin, jurado2);
+    cout << "\nPeriodo: "; getline(cin, periodo);
 
     estadoAceptacion = aceptacion::PENDIENTE;
     estadoTrabajo = estado::ABIERTA;
+    ActaTrabajo newActa( numero, fecha, autor, nombreTrabajo, tipoTrabajo, periodo, notaFinal, director, codirector, jurado1, jurado2, estadoTrabajo, estadoAceptacion );
+    actasCreadas.push_back( newActa );
     system( "PAUSE()" );
 }
 
@@ -138,3 +148,36 @@ void calificarCriterios();
 int calificarNotaFinal();
 void addComentario();
 
+void ActaTrabajo::mostrarActa(){
+   int i;
+   for ( i = 0; i < actasCreadas.size(); i++){
+      cout << "!--- Acta numero " << i + 1 << " ---!\n";
+      cout << "Numero acta: " << actasCreadas[i].numero << "\n";
+      cout << "Fecha: " << actasCreadas[i].fecha << "\n";
+      cout << "Autor: " << actasCreadas[i].autor << "\n";
+      cout << "Nombre trabajo: " << actasCreadas[i].nombreTrabajo << "\n";
+      if( actasCreadas[i].tipoTrabajo == APLICADO ){
+         cout << "Tipo trabajo: Aplicado\n";
+      }else{
+         cout << "Tipo trabajo: Investigacion\n";
+      }
+      cout << "Periodo: " << actasCreadas[i].periodo << "\n";
+      cout << "Nota final: " << actasCreadas[i].notaFinal << "\n";
+      cout << "Director: " << actasCreadas[i].director << "\n";
+      cout << "Codirector: " << actasCreadas[i].codirector << "\n";
+      cout << "Jurado 1: " << actasCreadas[i].jurado1 << "\n";
+      cout << "Jurado 2: " << actasCreadas[i].jurado2 << "\n";
+      if( actasCreadas[i].estadoTrabajo == ABIERTA ){
+         cout << "Estado Trabajo: Abierta\n";
+      }else{
+         cout << "Estado Trabajo: Cerrada\n";
+      }
+      if( actasCreadas[i].estadoAceptacion == ACEPTADO ){
+         cout << "Estado aceptacion: Aceptado\n";
+      }else if( actasCreadas[i].estadoAceptacion == RECHAZADO ){
+         cout << "Estado aceptacion: Rechazado\n";
+      }else{
+         cout << "Estado aceptacion: Pendiente\n";
+      }
+   }
+}
