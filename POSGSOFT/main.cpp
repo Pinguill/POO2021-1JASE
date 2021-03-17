@@ -4,6 +4,7 @@
 #include "criteriosCalificacion.h"
 
 int main(){
+   system( "CLS()" );
    ActaTrabajo acta;
    int opc;
    do{
