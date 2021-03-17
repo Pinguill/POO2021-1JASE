@@ -52,9 +52,13 @@ ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreT
     this -> estadoAceptacion = estadoAceptacion;
 }
 
+// Destructor, lo dejaremos vacío, para indicar que el acta esté cerrada de forma efectiva, lo haremos en el main 
+ActaTrabajo::~ActaTrabajo(){
+}
+
 void ActaTrabajo::crearActa()   
 {
-    int i = 0, contNumero = 1000; //Contador del numero de acta
+    int i = 0, contNumero = 1000; // Contador del numero de acta
     time_t now = time( 0 );
     char* dt = ctime( &now ); // Dt = day time, pasa la hora/dia actual a un char
     int opcTipoTrabajo;
@@ -79,12 +83,14 @@ void ActaTrabajo::crearActa()
         if( opcTipoTrabajo == 0 )   
         {
             tipoTrabajo = trabajo::APLICADO;
+            contadorTrabajoAplicado++;
             break;
         }
 
         else if( opcTipoTrabajo == 1 )  
         {
             tipoTrabajo = trabajo::INVESTIGACION;
+            contadorTrabajoInvestigacion++; 
             break;
         }
 
@@ -98,7 +104,7 @@ void ActaTrabajo::crearActa()
     cout << "\nDirector: "; getline(cin, director);
     
     cout << "\nHay codirector?";
-    cout << "\n0. No\n1. Si";
+    cout << "\n0. No\n1. Si\n";
 
     while( 1 )
     {
@@ -125,7 +131,8 @@ void ActaTrabajo::crearActa()
             cout << "\n\tERROR: Opcion no valida, intente de nuevo.\n";
         }
     }
-
+    
+    cin.ignore( 30, '\n' );
     cout << "\nJurado 1: "; getline(cin, jurado1);
     cout << "\nJurado 2: "; getline(cin, jurado2);
     cout << "\nPeriodo: "; getline(cin, periodo);
@@ -135,6 +142,7 @@ void ActaTrabajo::crearActa()
     ActaTrabajo newActa( numero, fecha, autor, nombreTrabajo, tipoTrabajo, periodo, notaFinal, director, codirector, jurado1, jurado2, estadoTrabajo, estadoAceptacion );
     actasCreadas.push_back( newActa );
     system( "PAUSE()" );
+    system( "CLS()" );
 }
 
 void ActaTrabajo::cerrarActa()
@@ -150,23 +158,27 @@ void addComentario();
 
 void ActaTrabajo::mostrarActa(){
    int i;
+
    for ( i = 0; i < actasCreadas.size(); i++){
       cout << "!--- Acta numero " << i + 1 << " ---!\n";
       cout << "Numero acta: " << actasCreadas[i].numero << "\n";
       cout << "Fecha: " << actasCreadas[i].fecha << "\n";
       cout << "Autor: " << actasCreadas[i].autor << "\n";
       cout << "Nombre trabajo: " << actasCreadas[i].nombreTrabajo << "\n";
+
       if( actasCreadas[i].tipoTrabajo == APLICADO ){
          cout << "Tipo trabajo: Aplicado\n";
       }else{
          cout << "Tipo trabajo: Investigacion\n";
       }
+      
       cout << "Periodo: " << actasCreadas[i].periodo << "\n";
       cout << "Nota final: " << actasCreadas[i].notaFinal << "\n";
       cout << "Director: " << actasCreadas[i].director << "\n";
       cout << "Codirector: " << actasCreadas[i].codirector << "\n";
       cout << "Jurado 1: " << actasCreadas[i].jurado1 << "\n";
       cout << "Jurado 2: " << actasCreadas[i].jurado2 << "\n";
+
       if( actasCreadas[i].estadoTrabajo == ABIERTA ){
          cout << "Estado Trabajo: Abierta\n";
       }else{
@@ -180,4 +192,60 @@ void ActaTrabajo::mostrarActa(){
          cout << "Estado aceptacion: Pendiente\n";
       }
    }
+}
+
+void ActaTrabajo::consultarTipoTrabajo()
+{
+    int i;
+
+    /*
+    En los dos procesos miramos las actas y comparamos cada una si es aplicado o investigación para imprimirlar
+    en conjunto, es decir, primero imprime cuantas y cuales hay de trabajos aplicados y después de investigación
+    */
+    cout << "\nSe han desarrollado " << contadorTrabajoAplicado << ", los cuales son:\n";
+    for( i = 0; i < actasCreadas.size(); i++ )
+    {
+        if( actasCreadas[i].tipoTrabajo == trabajo::APLICADO )
+        {
+            cout << actasCreadas[i].tipoTrabajo << std::endl;
+        }
+    }
+
+    cout << '\n';
+
+    cout << "\nSe han desarrollado " << contadorTrabajoInvestigacion << ", los cuales son:\n";
+    for( i = 0; i < actasCreadas.size(); i++ )
+    {
+        if( actasCreadas[i].tipoTrabajo == trabajo::INVESTIGACION )
+        {
+            cout << actasCreadas[i].tipoTrabajo << std::endl;
+        }
+    }
+
+}
+
+void ActaTrabajo::consultarEstadoAceptacion()
+{
+    int i;
+
+    cout << "\nActas Pendientes:\n";
+    for( i = 0; i < actasCreadas.size(); i++ )
+    {
+        if( actasCreadas[i].estadoAceptacion == aceptacion::PENDIENTE )
+        {
+            cout << "\n" << actasCreadas[i].nombreTrabajo;
+        }
+    }
+
+    cout << "\nActas Pendientes:\n";
+    for( i = 0; i < actasCreadas.size(); i++ )
+    {
+        if( actasCreadas[i].estadoAceptacion == aceptacion::RECHAZADO )
+        {
+            cout << "\n" << actasCreadas[i].nombreTrabajo;
+        }
+    }
+
+
+
 }
