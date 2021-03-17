@@ -45,8 +45,8 @@ class ActaTrabajo
         string jurado2;    
         estado estadoTrabajo;   // Hace referencia a si el acta está abierta o cerrada
         aceptacion estadoAceptacion;    // Significa si está aprobado, rechazado o pendiente
-        int contadorTrabajoAplicado = 0;
-        int contadorTrabajoInvestigacion = 0;
+        int contadorTrabajoAplicado;
+        int contadorTrabajoInvestigacion;
         vector <ActaTrabajo> actasCreadas;
         
     public:
@@ -54,7 +54,7 @@ class ActaTrabajo
         ActaTrabajo( int, string, string, string, trabajo, string, float, string, string, string, estado, aceptacion );
         ActaTrabajo( int, string, string, string, trabajo, string, float, string, string, string, string, estado, aceptacion );
         ~ActaTrabajo(); // Destructor para eliminar un acta, elimina TODOS los objetos después de cerrar el programa
-        void crearActa();   
+        void crearActa();  
         void cerrarActa();
         void calificarCriterios();  
         int calificarNotaFinal();
@@ -62,5 +62,6 @@ class ActaTrabajo
         void mostrarActa();
         void consultarTipoTrabajo();
         void consultarEstadoAceptacion();
+        void eliminarActa();  
 };
 #endif
