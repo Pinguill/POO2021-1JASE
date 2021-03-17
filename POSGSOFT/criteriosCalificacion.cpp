@@ -1,4 +1,5 @@
 #include "criteriosCalificacion.h"
+#include "experto.h"
 
 Criterio::Criterio(){
 }
@@ -15,11 +16,10 @@ Criterio::Criterio( string identificador, string textoPresentado, float ponderad
 
 void Criterio::llenarCriterio()
 {
-   cin.ignore( 30, '\n' );
+   system("CLS()");
    cout << "\nTítulo de criterio: "; getline( cin, identificador );
 
    // Este está en duda, no sé bien si sea descripción
-   cin.ignore( 30, '\n' );
    cout << "\n\nDescripción del criterio: "; getline( cin, textoPresentado );
 
    cout << "\nPonderación: "; 
@@ -29,7 +29,31 @@ void Criterio::llenarCriterio()
 
 void Criterio::calificarCriterio()
 {
+
+   string usuario, pw;
+   int salirIngreso, i;
+
+   /*
+      usuario y pw servirán para almacenar datos de nombre usuario y contraseña del jurado
+      salirIngreso será para salir del bucle, es decir, salir del bucle significa que o
+      accedió a su cuenta o no ingresó y falló la operación.
+   */
+
+   system("CLS()");
+   cout << "\nNecesitamos verificar que tenga permiso para modificar el acta.\n" << endl;
+
+   do
+   {
+      cout << "Nombre de Usuario: "; getline( cin, usuario );
+      cout << "Contraseña: "; getline( cin, pw );
+
+      // PREGUNTAR A PROFESORA AQUI, TENGO DUDA DE CÓMO INCLUIR LA CLASE
+ 
+   } while( salirIngreso != 0 );
+
    cout << "Nota pertinente: "; cin >> notaCriterio;
+
+   system("PAUSE()");
 }
 
 void Criterio::escribirMensaje()
