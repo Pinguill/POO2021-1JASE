@@ -65,7 +65,9 @@ void ActaTrabajo::crearActa()
     int existenciaCodirector;
     fecha = dt;
     numero = contNumero;
+    contNumero++;
 
+    system( "CLS()" );
     cout << "\n!---Ingrese los siguientes datos---!\n";
     cin.ignore(100,'\n');
     cout << "\nNombre del autor: "; getline(cin, autor) ;
@@ -136,7 +138,9 @@ void ActaTrabajo::crearActa()
     cout << "\nJurado 1: "; getline(cin, jurado1);
     cout << "\nJurado 2: "; getline(cin, jurado2);
     cout << "\nPeriodo: "; getline(cin, periodo);
+    cout << "\nImportante: El numero del acta es: " << numero << std::endl;
 
+    cout << '\n';
     estadoAceptacion = aceptacion::PENDIENTE;
     estadoTrabajo = estado::ABIERTA;
     ActaTrabajo newActa( numero, fecha, autor, nombreTrabajo, tipoTrabajo, periodo, notaFinal, director, codirector, jurado1, jurado2, estadoTrabajo, estadoAceptacion );
@@ -146,15 +150,17 @@ void ActaTrabajo::crearActa()
 }
 
 void ActaTrabajo::cerrarActa()
-{   
-    estadoTrabajo = estado::CERRADA;
-    // Aquí pondremos un sleep para hacer un efecto de espera mientras cierra.
-    system( "PAUSE()" );
+{
 }
-
-void calificarCriterios();
-int calificarNotaFinal();
-void addComentario();
+void ActaTrabajo::calificarCriterios()
+{
+}
+int ActaTrabajo::calificarNotaFinal()
+{
+}
+void ActaTrabajo::addComentario()
+{
+}
 
 void ActaTrabajo::mostrarActa(){
    int i;
@@ -196,56 +202,107 @@ void ActaTrabajo::mostrarActa(){
 
 void ActaTrabajo::consultarTipoTrabajo()
 {
+    system( "CLS()");
     int i;
 
     /*
     En los dos procesos miramos las actas y comparamos cada una si es aplicado o investigación para imprimirlar
     en conjunto, es decir, primero imprime cuantas y cuales hay de trabajos aplicados y después de investigación
     */
-    cout << "\nSe han desarrollado " << contadorTrabajoAplicado << ", los cuales son:\n";
-    for( i = 0; i < actasCreadas.size(); i++ )
-    {
-        if( actasCreadas[i].tipoTrabajo == trabajo::APLICADO )
+
+   if( contadorTrabajoAplicado > 0 )
+   {
+        cout << "\nSe han desarrollado " << contadorTrabajoAplicado << ", los cuales son:\n";
+
+        // Si no hay trabajos aplicados no entra a ciclo
+        if( contadorTrabajoAplicado > 0 )
         {
-            cout << actasCreadas[i].tipoTrabajo << std::endl;
+            for( i = 0; i < actasCreadas.size(); i++ )
+            {
+                if( actasCreadas[i].tipoTrabajo == trabajo::APLICADO )
+                {
+                    cout << actasCreadas[i].tipoTrabajo << std::endl;
+                }
+            }
         }
+   }
+   else
+   {
+       cout << "\nNo se ha desarrollado ningun trabajo aplicado" << std::endl;
     }
 
     cout << '\n';
 
-    cout << "\nSe han desarrollado " << contadorTrabajoInvestigacion << ", los cuales son:\n";
-    for( i = 0; i < actasCreadas.size(); i++ )
+    if( contadorTrabajoInvestigacion  > 0 )
     {
-        if( actasCreadas[i].tipoTrabajo == trabajo::INVESTIGACION )
+        cout << "\nSe han desarrollado " << contadorTrabajoInvestigacion << ", los cuales son:\n";
+
+        // Si no hay trabajos de investigación, no entra a ciclo
+        if( contadorTrabajoInvestigacion > 0 )
         {
-            cout << actasCreadas[i].tipoTrabajo << std::endl;
+            for( i = 0; i < actasCreadas.size(); i++ )
+            {
+                if( actasCreadas[i].tipoTrabajo == trabajo::INVESTIGACION )
+                {
+                    cout << actasCreadas[i].tipoTrabajo << std::endl;
+                }
+            }
         }
     }
-
+    else
+    {
+        cout << "\nNo se ha desarrollado ningun trabajo de investigacion\n" << std::endl;
+    }
+    cout << std::endl;
+    system("PAUSE()");
 }
+
 
 void ActaTrabajo::consultarEstadoAceptacion()
 {
-    int i;
+    system( "CLS()");
+    int i, contadorEspecial;    
+    /* 
+        ContadorEspecial sirve para notificar mensaje especial en caso de que 
+        no hayan actas pendientes o rechazadas
+    */
 
     cout << "\nActas Pendientes:\n";
+    contadorEspecial = 0;
     for( i = 0; i < actasCreadas.size(); i++ )
     {
         if( actasCreadas[i].estadoAceptacion == aceptacion::PENDIENTE )
         {
             cout << "\n" << actasCreadas[i].nombreTrabajo;
+            contadorEspecial++;
         }
     }
 
-    cout << "\nActas Pendientes:\n";
+    if( contadorEspecial == 0 )
+    {
+        cout << "No hay ningun acta pendiente momentaneamente.\n";
+    }
+
+    cout << '\n';
+    cout << "\nActas Rechazadas:\n";
+    contadorEspecial = 0;
     for( i = 0; i < actasCreadas.size(); i++ )
     {
         if( actasCreadas[i].estadoAceptacion == aceptacion::RECHAZADO )
         {
             cout << "\n" << actasCreadas[i].nombreTrabajo;
+            contadorEspecial++;
         }
     }
+    if( contadorEspecial == 0 )
+    {
+        cout << "No hay ningun acta rechazada momentaneamente.\n";
+    }
 
+    cout << std::endl;
+    system("PAUSE()");
+}
 
-
+void ActaTrabajo::eliminarActa()
+{
 }
