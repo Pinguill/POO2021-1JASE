@@ -1,16 +1,15 @@
 #ifndef EXPERTO_H
 #define EXPERTO_H
 
+#include <iostream>
 #include <vector>
 #include <string>
-#include <iostream>
 
 using std::vector;
 using std::string;
 using std::cout;
 using std::cin;
 
-vector <string> nombre;
 
 enum ingreso   // Verifica si el experto se ha registrado
 {
@@ -32,7 +31,7 @@ class Experto{
       string nombre;
       int trabajosDirigidos;
       ingreso registro;
-      vector <Experto> expertosCreados;   // Añadí este vector 
+      vector <Experto> expertosCreados;   
 
    public:
       Experto();
