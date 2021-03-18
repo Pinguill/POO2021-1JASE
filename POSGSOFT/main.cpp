@@ -3,41 +3,44 @@
 #include "experto.h"
 #include "actaTrabajo.h"
 #include "criteriosCalificacion.h"
+#include "conjuntoLista.h"
 
 int main(){
    system( "CLS()" );
-   ActaTrabajo acta;
-   Experto jurado;
+   Universidad archivo;
    int opc, opc2;
 
    do{
       opc = menu();
       switch ( opc ){
       case 1:
-         acta.crearActa();
+         archivo.crearActa();
          break;
       case 2:
-         acta.mostrarActa();
+         archivo.mostrarActas();
          break;
       case 3:
-         jurado.registrarExperto();
+         archivo.registrarExperto();
          break;
       case 4:
          break;
       case 5:
+         archivo.cerrarActa();
+         break;
+      case 6:
          do{
             opc2 = menu2();
 
             switch( opc2 )
             {
             case 1:
-               acta.consultarTipoTrabajo();
+               archivo.consultarTipoTrabajo();
                break;
-            case 6:
-               acta.consultarEstadoAceptacion();
+            case 2:
+               archivo.consultarEstadoAceptacion();
                break;
-            case 7:
-               jurado.consultarJurados();
+            case 3:
+               archivo.consultarJurados();
                break;
             case 0:
                break;

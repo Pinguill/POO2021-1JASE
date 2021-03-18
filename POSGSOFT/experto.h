@@ -29,16 +29,15 @@ class Experto{
       string password;
       sectorExperto sector;   // Se refiere a si el jurado es interno o externo, lo cambié de Bool a Enum
       string nombre;
-      int trabajosDirigidos;
+      int trabajosDirigidos = 0;
       ingreso registro;
-      vector <Experto> expertosCreados;   
 
    public:
       Experto();
       Experto( string, string, sectorExperto, string );
-      void registrarExperto();
       void consultarJurados(); // Consulta jurados externos e internos
       void getExperto();
+      string getUsuario();
 };
 
 #endif

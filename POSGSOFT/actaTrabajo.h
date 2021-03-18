@@ -37,7 +37,7 @@ class ActaTrabajo
         string nombreTrabajo;   
         trabajo tipoTrabajo;
         string periodo;     // Se refiere al año y semestre
-        float notaFinal;
+        float notaFinal = 0;
         string director;
         bool existeCodirector;
         string codirector;
@@ -45,14 +45,10 @@ class ActaTrabajo
         string jurado2;    
         estado estadoTrabajo;   // Hace referencia a si el acta está abierta o cerrada
         aceptacion estadoAceptacion;    // Significa si está aprobado, rechazado o pendiente
-        int contadorTrabajoAplicado;
-        int contadorTrabajoInvestigacion;
-        vector <ActaTrabajo> actasCreadas;
-        
     public:
         ActaTrabajo();
-        ActaTrabajo( int, string, string, string, trabajo, string, float, string, string, string, estado, aceptacion );
-        ActaTrabajo( int, string, string, string, trabajo, string, float, string, string, string, string, estado, aceptacion );
+        //ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, estado, aceptacion );
+        ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, string, estado, aceptacion );
         ~ActaTrabajo(); // Destructor para eliminar un acta, elimina TODOS los objetos después de cerrar el programa
         void crearActa();  
         void cerrarActa();
@@ -63,5 +59,11 @@ class ActaTrabajo
         void consultarTipoTrabajo();
         void consultarEstadoAceptacion();
         void eliminarActa();  
+        trabajo getTipoTrabajo();
+        aceptacion getEstadoAceptacion();
+        string getNombreTrabajo();
+        int getNumeroActa();
+        estado getEstadoTrabajo();
+        void setEstadoTrabajo( estado );
 };
 #endif

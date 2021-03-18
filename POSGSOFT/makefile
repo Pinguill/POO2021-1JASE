@@ -1,6 +1,8 @@
 all: compilar
-compilar: experto actaTrabajo criteriosCalificacion menu main
-		g++ -o actaTrabajo experto.o criteriosCalificacion.o actaTrabajo.o menu.o main.o
+compilar: conjuntoLista experto actaTrabajo criteriosCalificacion menu main
+		g++ -o actaTrabajo experto.o criteriosCalificacion.o actaTrabajo.o menu.o main.o conjuntoLista.o
+conjuntoLista: conjuntoLista.cpp conjuntoLista.h
+		g++ -c conjuntoLista.cpp
 criteriosCalificacion: criteriosCalificacion.cpp criteriosCalificacion.h
 		g++ -c criteriosCalificacion.cpp
 experto: experto.cpp experto.h
