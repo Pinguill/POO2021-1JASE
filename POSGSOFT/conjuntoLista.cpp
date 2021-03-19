@@ -107,7 +107,6 @@ void Universidad::crearActa()   {
     system( "CLS()" );
 }
 
-//sin completar aun
 void Universidad::consultarTipoTrabajo(){
    system( "CLS()");
    int i;
@@ -128,7 +127,7 @@ void Universidad::consultarTipoTrabajo(){
             {
                 if(  vectorActasTrabajos[i].getTipoTrabajo() == trabajo::APLICADO )
                 {
-                    cout <<  vectorActasTrabajos[i].getTipoTrabajo() << std::endl;
+                    cout <<  vectorActasTrabajos[i].getNombreTrabajo() << std::endl;
                 }
             }
         }
@@ -151,7 +150,7 @@ void Universidad::consultarTipoTrabajo(){
             {
                 if(  vectorActasTrabajos[i].getTipoTrabajo() == trabajo::INVESTIGACION )
                 {
-                    cout <<  vectorActasTrabajos[i].getTipoTrabajo() << std::endl;
+                    cout <<  vectorActasTrabajos[i].getNombreTrabajo() << std::endl;
                 }
             }
         }

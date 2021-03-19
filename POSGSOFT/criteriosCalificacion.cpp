@@ -17,7 +17,7 @@ Criterio::Criterio( string identificador, string textoPresentado, float ponderad
 void Criterio::llenarCriterio()
 {
    system("CLS()");
-   cout << "\nTítulo de criterio: "; getline( cin, identificador );
+   cout << "\nTitulo de criterio: "; getline( cin, identificador );
 
    // Este está en duda, no sé bien si sea descripción
    cout << "\n\nDescripción del criterio: "; getline( cin, textoPresentado );

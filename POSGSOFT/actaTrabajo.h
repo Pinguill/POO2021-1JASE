@@ -50,15 +50,11 @@ class ActaTrabajo
         //ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, estado, aceptacion );
         ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, string, estado, aceptacion );
         ~ActaTrabajo(); // Destructor para eliminar un acta, elimina TODOS los objetos después de cerrar el programa
-        void crearActa();  
-        void cerrarActa();
         void calificarCriterios();  
         int calificarNotaFinal();
         void addComentario();    // Añade comentarios en caso de que los jurados lo deseen     
-        void mostrarActa();
-        void consultarTipoTrabajo();
-        void consultarEstadoAceptacion();
         void eliminarActa();  
+        void mostrarActa();
         trabajo getTipoTrabajo();
         aceptacion getEstadoAceptacion();
         string getNombreTrabajo();

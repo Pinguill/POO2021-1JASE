@@ -18,6 +18,8 @@ class Criterio{
       string textoPresentado;
       float ponderado;
       string mensajeJurado;
+      float notaJurado1 = 0;
+      float notaJurado2 = 0;
       float notaCriterio;
       vector <Criterio> listaCriterios;
       
