@@ -28,6 +28,7 @@ int menu2()
    cout << "1. Actas Aplicadas e Investigativas desarrolladas" << endl;
    cout << "2. Actas Pendientes y Rechazadas " << endl;
    cout << "3. Jurados externos e internos" << endl;
+   cout << "4. Trabajos dirigidos por profesor" << endl;
    cout << "0. Salir\n" << endl;
    cout << "Digita el numero: ";
    cin >> opcion2;

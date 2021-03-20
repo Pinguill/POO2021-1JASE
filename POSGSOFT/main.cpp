@@ -8,10 +8,12 @@
 int main(){
    system( "CLS()" );
    Universidad archivo;
+
    int opc, opc2;
 
    do{
       opc = menu();
+
       switch ( opc ){
       case 1:
          archivo.crearActa();
@@ -29,6 +31,7 @@ int main(){
          break;
       case 6:
          do{
+
             opc2 = menu2();
 
             switch( opc2 )
@@ -42,6 +45,9 @@ int main(){
             case 3:
                archivo.consultarJurados();
                break;
+            case 4:
+               archivo.consultarTrabajoProfesor();
+               break;
             case 0:
                break;
             default:
@@ -49,6 +55,7 @@ int main(){
                break;
             }
          } while( opc2 != 0 );
+         
          break;
       default:
          break;
