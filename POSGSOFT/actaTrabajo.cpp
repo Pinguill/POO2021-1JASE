@@ -132,3 +132,13 @@ string ActaTrabajo::getDirector()
 {
    return this->director;
 }
+
+string ActaTrabajo::getJuradoUno()
+{
+   return this->jurado1;
+}
+
+string ActaTrabajo::getJuradoDos()
+{
+   return this->jurado2;
+}
