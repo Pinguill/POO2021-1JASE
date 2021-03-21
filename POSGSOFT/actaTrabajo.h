@@ -44,7 +44,7 @@ class ActaTrabajo
         string jurado1;
         string jurado2;    
         estado estadoTrabajo;   // Hace referencia a si el acta está abierta o cerrada
-        aceptacion estadoAceptacion;    // Significa si está aprobado, rechazado o pendiente
+        aceptacion estadoAceptacion;    // Significa si está aprobado, rechazado o pendiente  
     public:
         ActaTrabajo();
         //ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, estado, aceptacion );
