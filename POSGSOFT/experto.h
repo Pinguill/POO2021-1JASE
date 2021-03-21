@@ -35,7 +35,7 @@ class Experto{
    public:
       Experto();
       Experto( string, string, sectorExperto, string );
-      void consultarJurados(); // Consulta jurados externos e internos, validacion hecha
+      void consultarJurados(); // Consulta jurados externos e internos
       void getExperto();
       string getUsuario();
 };
