@@ -39,25 +39,37 @@ void Universidad::crearActa()
         // Implementamos un mini-menu para establecer el tipo de trabajo 
         cout << "\nCual es el tipo de trabajo?\n";      
         cout << "\n0. Aplicado\n1. Investigacion\n";
-        cout << "Opcion: "; 
-        cin >> opcTipoTrabajo;
+        cout << " "; 
 
-        // Dependiendo de la elección se asigna un tipo de trabajo u otro.
+        /*
+            Aquí el entra a while si el valor dado no es numerico, 
+            no saldrá del while hasta que el usuario escriba un número
+        */
+        while( !( cin >> opcTipoTrabajo ) )
+        {
+            cout << "\nPor favor ingrese un valor valido (numerico): ";
+            cin.clear();
+            cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n');
+        }
+
         if( opcTipoTrabajo == 1 )
         {
             tipoTrabajo = trabajo::INVESTIGACION;
             contadorTrabajoInvestigacion++; 
             break;
         }
-        else if( opcTipoTrabajo == 0)
+
+        else if( opcTipoTrabajo == 0 )
         {
             tipoTrabajo = trabajo::APLICADO;
-            contadorTrabajoAplicado++;    
-            break;        
+            contadorTrabajoAplicado++; 
+            break;   
         }
+
         else
         {
-            cout << "\n\tValor no valido, intente de nuevo\n";
+            cout << "\n\tValor invalido\n";
+            cout << endl;
         }
     }
 
@@ -68,7 +80,14 @@ void Universidad::crearActa()
     {
         cout << "\nHay codirector?";
         cout << "\n0. No\n1. Si\n";
-        cout << " "; cin >> existenciaCodirector;
+        cout << " "; 
+
+        while( !( cin >> existenciaCodirector ) )
+        {
+            cout << "\nPor favor, ingrese un valor valido (numerico): ";
+            cin.clear();
+            cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n' );
+        }
 
         // Verifica si existe codirector o no, si no existe lo asigna como NA.
         if( existenciaCodirector == 0 )   
@@ -91,15 +110,16 @@ void Universidad::crearActa()
         else
         {
             cout << "\n\tValor invalido, intente de nuevo.\n";
+            cout << endl;
         }
     }
     
     cout << "\nJurado 1: "; getline(cin, jurado1);
     cout << "\nJurado 2: "; getline(cin, jurado2);
     cout << "\nPeriodo: "; getline(cin, periodo);
-    cout << "\nImportante: El numero del acta es: " << numero << std::endl;
+    cout << "\n\nImportante: El numero del acta es: " << numero << std::endl;
 
-    cout << '\n';
+    cout << "\n\n";
     estadoAceptacion = aceptacion::PENDIENTE;
     estadoTrabajo = estado::ABIERTA;
     ActaTrabajo newActa( numero, fecha, autor, nombreTrabajo, tipoTrabajo, periodo, director, codirector, jurado1, jurado2, estadoTrabajo, estadoAceptacion );
@@ -244,14 +264,14 @@ void Universidad::registrarExperto(){
 
        if( std::find_if( user.begin(),user.end(), space ) != user.end() )
        {
-          cout << "\n\tLo sentimos! El usuario no puede incluir espacios\n";
+          cout << "\n\tLo sentimos! El usuario no puede incluir espacios\n" << endl;
           findError++;
        }
 
       // Aquí miramos si el usuario es muy largo o muy corto
       if( user.size() > 16 || user.size() < 4 )  
       {
-         cout << "\n\tLo sentimos! Tu nombre de usuario no cumple con los parametros. ";
+         cout << "\n\tLo sentimos! Tu nombre de usuario no cumple con los parametros.\n" << endl;
          findError++;
       }
 
@@ -291,7 +311,13 @@ void Universidad::registrarExperto(){
       cout << "\n\nEres profesor de la Universidad?\n";
       cout << "0.No\n1.Si" << std::endl;
       cout << " ";
-      cin >> opcSector;
+      
+      while( !( cin >> opcSector ) )
+      {
+          cout << "\nPor favor, ingrese un valor valido (numerico): ";
+          cin.clear();
+          cin.ignore( std::numeric_limits< std::streamsize > ::max(), '\n' );
+      }
 
       if( opcSector == 0 )
       {
@@ -305,7 +331,8 @@ void Universidad::registrarExperto(){
       }
       else
       {
-         cout << "\nOpcion incorrecta, intente de nuevo" << std::endl;
+         cout << "\n\tValor invalido, intente de nuevo" << endl;
+         cout << endl;
       }
    }
 
@@ -314,7 +341,7 @@ void Universidad::registrarExperto(){
    // Aui podriamos poner el sleep
    Experto newjurado( user, password, sector, nombre );
    vectorPersonas.push_back (newjurado );
-   cout << "\n\nFelicitaciones: Has sido registrado satisfactoriamente\n" << std::endl;;
+   cout << "\n\nFelicitaciones: Has sido registrado satisfactoriamente\n\n" << std::endl;;
    system( "Pause()" );
    system( "CLS()" );
 }
@@ -387,6 +414,9 @@ void Universidad::consultarTrabajoProfesor()
         contador, por ende, si se mantiene en 0 no encontró nada.
 
         contadorProfesor cuenta el numero de trabajos de los que ha dirigido un profesor
+
+        Implementamos un do-while para que el usuario pueda ingresar el numero 
+        de profesores que desee
     */
     do{
         system("CLS()");
@@ -401,12 +431,6 @@ void Universidad::consultarTrabajoProfesor()
         cin.ignore( 30, '\n' );
         cout << "\nDigite el nombre del profesor del cual quiere conocer los trabajos que ha dirigido: ";
         getline( cin, profesor );
-
-        /*
-            Implementamos un do-while para que el usuario pueda ingresar el numero 
-            de profesores que desee
-        */
-
         cout << endl;
 
         // Recorremos el vector de actas para verificar si el profesor está
@@ -434,27 +458,110 @@ void Universidad::consultarTrabajoProfesor()
         cout << endl;
 
         // Valida que el usuario solo pueda digitar entre 0 y 1
-        while( -1 )
+        while( 1 )
         {
             system("PAUSE()");
             system("CLS()");
             // Mini menú para saber si desean continuar con buscando
             cout << "\nDeseas buscar a otro profesor?";
             cout << "\n0.No\n1.Si\n";
-            cout << "\nRespuesta: "; cin >> decisionUser;
+            cout << " ";
+
+            while( !( cin >> decisionUser ) )
+            {
+                cout << "\nPor favor, ingrese un valor valido (numerico): ";
+                cin.clear();
+                cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n');
+            }
+
             cout << std::endl;
 
             if( decisionUser == 1 || decisionUser == 0 )
             {
                 break;
-            }
-            
-            else if( decisionUser != 1 || decisionUser != 0);
+            }        
+            else
             {
-                cout << "\nOpcion no valida, intente de nuevo";
+                cout << "\n\tOpcion no valida, intente de nuevo\n";
+                cout << endl;
             }
             
         }
         
     } while( decisionUser != 0 );   // Si es 0, sale de este apartado
+
+    system( "PAUSE()" );
+}
+
+void Universidad::consultarTrabajosJurado()
+{
+    int i, decisionUser, contadorJurado = 0;
+    string jurado;
+
+    do{
+        system("CLS()");
+
+        // Verificamos si está vacía, si lo está sale del do-while
+        if( vectorActasTrabajos.empty() )
+        {
+            cout << "\nLo sentimos! No hay actas creadas\n" << endl;
+            break;
+        }
+
+        cin.ignore( 30, '\n' );
+        cout << "\nDigite el nombre del jurado del cual quiere conocer los trabajos que ha dirigido: ";
+        getline( cin, jurado );
+        cout << endl;
+
+        // Recorremos el vector de actas para verificar si el profesor está
+        for( i = 0; i <= vectorActasTrabajos.size(); i++ )
+        {
+            if( vectorActasTrabajos[i].getJuradoUno() == jurado || vectorActasTrabajos[i].getJuradoDos() == jurado )
+            {
+                // Imprime los el nombre de las actas si concuerda con el nombre de profesor
+                cout << vectorActasTrabajos[i].getNombreTrabajo() << endl;
+                contadorJurado++;
+            }
+
+            else if( i == vectorActasTrabajos.size() && contadorJurado == 0 )
+            {
+                cout << "\nLo Sentimos! Profesor inexistente.\n";
+            }
+        }
+
+        cout << endl;
+
+        // Valida que el usuario solo pueda digitar entre 0 y 1
+        while( 1 )
+        {
+            system("PAUSE()");
+            system("CLS()");
+            // Mini menú para saber si desean continuar con buscando
+            cout << "\nDeseas buscar a otro profesor?";
+            cout << "\n0.No\n1.Si\n";
+            cout << " ";
+
+            while( !( cin >> decisionUser ) )
+            {
+                cout << "\nPor favor, ingrese un valor valido (numerico): ";
+                cin.clear();
+                cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n');
+            }
+
+            cout << std::endl;
+
+            if( decisionUser == 1 || decisionUser == 0 )
+            {
+                break;
+            }        
+            else
+            {
+                cout << "\n\tOpcion no valida, intente de nuevo\n";
+                cout << endl;
+            }  
+        }
+        
+    } while( decisionUser != 0 );   // Si es 0, sale de este apartado
+
+    system( "PAUSE()" );
 }

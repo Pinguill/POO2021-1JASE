@@ -5,7 +5,7 @@
 #include "criteriosCalificacion.h"
 #include <vector>
 #include <cctype>
- #include <algorithm>
+#include <algorithm>
 
 using std::vector;
 using std::string;
@@ -22,16 +22,18 @@ class Universidad{
 
    public:
       Universidad();
-      void mostrarActas(); // No tiene validaciones
-      void mostrarPersona();  // No tiene validaciones
-      void mostrarCriterio(); // No tiene validaciones
-      void crearActa(); // Falta validar cuando el usuario pone un valor string en vez de int en menús
-      void consultarTipoTrabajo();  //Validaciones hechas
-      void consultarEstadoAceptacion();   // Validaciones hechas
-      void registrarExperto();   //  Falta validar cuando el usuario pone un valor string en vez de int en menús
-      void consultarJurados();   // Validaciones hechas
-      void cerrarActa();   // Validaciones hechas
-      void consultarTrabajoProfesor(); //  Falta validar cuando el usuario pone un valor string en vez de int en menús
+      void mostrarActas(); 
+      void mostrarPersona();  
+      void mostrarCriterio(); 
+      void crearActa(); 
+      void consultarTipoTrabajo();  
+      void consultarEstadoAceptacion();   
+      void registrarExperto();   
+      void consultarJurados();   // Consulta jurados externos e internos
+      void cerrarActa();   
+      void consultarTrabajoProfesor(); // Cuales y cuantos trabajos ha dirigido un profesor
+      void consultarTrabajosJurado();
+      void consultarListaJurados(); // Consultar lista de jurados en las actas sin repetir
 };
 
 #endif
