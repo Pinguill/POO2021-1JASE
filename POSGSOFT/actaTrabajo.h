@@ -47,7 +47,6 @@ class ActaTrabajo
         aceptacion estadoAceptacion;    // Significa si está aprobado, rechazado o pendiente  
     public:
         ActaTrabajo();
-        //ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, estado, aceptacion );
         ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, string, estado, aceptacion );
         ~ActaTrabajo(); // Destructor para eliminar un acta, elimina TODOS los objetos después de cerrar el programa
         void calificarCriterios();  
@@ -60,6 +59,7 @@ class ActaTrabajo
         string getNombreTrabajo();
         int getNumeroActa();
         estado getEstadoTrabajo();
+        string getDirector();
         void setEstadoTrabajo( estado );
 };
 #endif

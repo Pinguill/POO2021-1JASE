@@ -21,6 +21,7 @@ void Experto::consultarJurados()
    /*
       i es un iterador.
       contadorExperto será para validar un mensaje especial en caso que no hayan jurados internos y/o externos
+      En ambos casos, si el contador es 0, significa que no hay jurado interno o externo. Se evalua individualmente
    */ 
 
    system( "CLS()");

@@ -8,10 +8,8 @@ using std::getline;
 
 ActaTrabajo::ActaTrabajo()
 {
-
 }
 
-// Usamos este constructor cuando hay codirector
 ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreTrabajo, trabajo tipoTrabajo, 
     string periodo, string director,  string codirector, string jurado1, string jurado2, 
     estado estadoTrabajo, aceptacion estadoAceptacion )
@@ -58,6 +56,7 @@ estado ActaTrabajo::getEstadoTrabajo(){
 void ActaTrabajo::setEstadoTrabajo( estado estadoTrabajo ){
    this->estadoTrabajo = estadoTrabajo;
 }
+
 
 /*
 void ActaTrabajo::cerrarActa()
@@ -125,9 +124,11 @@ void ActaTrabajo::mostrarActa(){
    }else{
       cout << "Estado aceptacion: Pendiente\n";
    }
+   cout << endl;
    system("PAUSE()");
 }
 
-void ActaTrabajo::eliminarActa()
+string ActaTrabajo::getDirector()
 {
+   return this->director;
 }

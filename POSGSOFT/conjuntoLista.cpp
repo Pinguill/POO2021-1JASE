@@ -6,12 +6,14 @@ Universidad::Universidad(){
 void Universidad::mostrarActas(){
    system( "CLS()" );
    int i;
+
    for ( i = 0; i < vectorActasTrabajos.size(); i++){
       vectorActasTrabajos[i].mostrarActa();
    }
 }
 
-void Universidad::crearActa()   {
+void Universidad::crearActa()
+{
     char* fecha;
     string autor, nombreTrabajo, director, codirector, jurado1, jurado2, periodo;
     int i = 0, numero = 1000; // Contador del numero de acta
@@ -31,51 +33,50 @@ void Universidad::crearActa()   {
     cin.ignore(100,'\n');
     cout << "\nNombre del autor: "; getline(cin, autor) ;
     cout << "\nNombre del trabajo: "; getline(cin, nombreTrabajo);
-
-    // Implementamos un mini-menu para establecer el tipo de trabajo 
-    cout << "\nCual es el tipo de trabajo?\n";      
-    cout << "\n0. Aplicado\n1. Investigacion\n";
     
     while( 1 )
     {
-        cout << " "; cin >> opcTipoTrabajo;
+        // Implementamos un mini-menu para establecer el tipo de trabajo 
+        cout << "\nCual es el tipo de trabajo?\n";      
+        cout << "\n0. Aplicado\n1. Investigacion\n";
+        cout << "Opcion: "; 
+        cin >> opcTipoTrabajo;
 
         // Dependiendo de la elección se asigna un tipo de trabajo u otro.
-        if( opcTipoTrabajo == 0 )   
-        {
-            tipoTrabajo = trabajo::APLICADO;
-            contadorTrabajoAplicado++;
-            break;
-        }
-
-        else if( opcTipoTrabajo == 1 )  
+        if( opcTipoTrabajo == 1 )
         {
             tipoTrabajo = trabajo::INVESTIGACION;
             contadorTrabajoInvestigacion++; 
             break;
         }
-
-        // Entra en ciclo infinito hasta que ingrese una de las opciones válidas
+        else if( opcTipoTrabajo == 0)
+        {
+            tipoTrabajo = trabajo::APLICADO;
+            contadorTrabajoAplicado++;    
+            break;        
+        }
         else
         {
-            cout << "\n\tERROR: Opcion no valida, intente de nuevo.\n";
+            cout << "\n\tValor no valido, intente de nuevo\n";
         }
     }
+
     cin.ignore(100,'\n');
     cout << "\nDirector: "; getline(cin, director);
 
-    cout << "\nHay codirector?";
-    cout << "\n0. No\n1. Si\n";
-
     while( 1 )
     {
+        cout << "\nHay codirector?";
+        cout << "\n0. No\n1. Si\n";
         cout << " "; cin >> existenciaCodirector;
 
-        // Verifica si existe codirector o no
+        // Verifica si existe codirector o no, si no existe lo asigna como NA.
         if( existenciaCodirector == 0 )   
         {
-            existeCodirector = false;
-            break;
+            cin.ignore( 100, '\n' );
+            existeCodirector = true;
+            codirector = "NA";
+            break;           
         }
 
         else if( existenciaCodirector == 1 )  
@@ -89,7 +90,7 @@ void Universidad::crearActa()   {
         // Entra en ciclo infinito hasta que ingrese una de las opciones válidas
         else
         {
-            cout << "\n\tERROR: Opcion no valida, intente de nuevo.\n";
+            cout << "\n\tValor invalido, intente de nuevo.\n";
         }
     }
     
@@ -103,6 +104,7 @@ void Universidad::crearActa()   {
     estadoTrabajo = estado::ABIERTA;
     ActaTrabajo newActa( numero, fecha, autor, nombreTrabajo, tipoTrabajo, periodo, director, codirector, jurado1, jurado2, estadoTrabajo, estadoAceptacion );
     this->vectorActasTrabajos.push_back( newActa );
+
     system( "PAUSE()" );
     system( "CLS()" );
 }
@@ -117,24 +119,22 @@ void Universidad::consultarTipoTrabajo(){
    */
 
    if( contadorTrabajoAplicado > 0 )
-   {
+    {
         cout << "\nSe han desarrollado " << contadorTrabajoAplicado << ", los cuales son:\n";
 
         // Si no hay trabajos aplicados no entra a ciclo
-        if( contadorTrabajoAplicado > 0 )
+        for( i = 0; i < vectorActasTrabajos.size(); i++ )
         {
-            for( i = 0; i < vectorActasTrabajos.size(); i++ )
+            if(  vectorActasTrabajos[i].getTipoTrabajo() == trabajo::APLICADO )
             {
-                if(  vectorActasTrabajos[i].getTipoTrabajo() == trabajo::APLICADO )
-                {
-                    cout <<  vectorActasTrabajos[i].getNombreTrabajo() << std::endl;
-                }
+                cout <<  vectorActasTrabajos[i].getNombreTrabajo() << std::endl;
             }
         }
-   }
-   else
-   {
-       cout << "\nNo se ha desarrollado ningun trabajo aplicado" << std::endl;
+    }
+    // Validacion en caso de que no se hayan creado trabajos aplicados
+    else
+    {
+        cout << "\nNo se ha desarrollado ningun trabajo aplicado" << std::endl;
     }
 
     cout << '\n';
@@ -144,21 +144,21 @@ void Universidad::consultarTipoTrabajo(){
         cout << "\nSe han desarrollado " << contadorTrabajoInvestigacion << ", los cuales son:\n";
 
         // Si no hay trabajos de investigación, no entra a ciclo
-        if( contadorTrabajoInvestigacion > 0 )
+        for( i = 0; i < vectorActasTrabajos.size(); i++ )
         {
-            for( i = 0; i < vectorActasTrabajos.size(); i++ )
+            if(  vectorActasTrabajos[i].getTipoTrabajo() == trabajo::INVESTIGACION )
             {
-                if(  vectorActasTrabajos[i].getTipoTrabajo() == trabajo::INVESTIGACION )
-                {
-                    cout <<  vectorActasTrabajos[i].getNombreTrabajo() << std::endl;
-                }
+                cout <<  vectorActasTrabajos[i].getNombreTrabajo() << std::endl;
             }
         }
     }
+    
+    // Validacion en caso de que no hayan trabajos de investigación
     else
     {
         cout << "\nNo se ha desarrollado ningun trabajo de investigacion\n" << std::endl;
     }
+
     cout << std::endl;
     system("PAUSE()");
 }
@@ -209,9 +209,12 @@ void Universidad::consultarEstadoAceptacion(){
 
 void Universidad::registrarExperto(){
    int i, opcSector, findError; // i = iterador para validar el nombre de usuario
+   int (*space)(int) = std::isspace;    //Funcion que determina el caracter de "espacio"
+   
    string user, password, nombre;
    sectorExperto sector;
    ingreso registro;
+
    system("CLS()");
    cin.ignore( 40, '\n' );
    cout << "Nombre completo: "; getline( cin, nombre );
@@ -224,6 +227,7 @@ void Universidad::registrarExperto(){
          de usuario no le pertenece a otro usuario y cumple con el tamaño de la misma.
       */
       findError = 0;
+
       cout << "\nImportante: El nombre de usuario debe de tener mas de 4 caracteres y menos de 16";
       cout << "\nNombre de Usuario: "; getline( cin, user );
 
@@ -232,16 +236,22 @@ void Universidad::registrarExperto(){
          // Aquí miramos si el usuario ya existe
          if( user == vectorPersonas[i].getUsuario() )
          {
-            cout << "\nLo sentimos! Ese nombre de usuario ya existe" << std::endl;
+            cout << "\n\tLo sentimos! Ese nombre de usuario ya existe\n" << std::endl;
             findError++;
             break;
          }
-         // Aquí miramos si el usuario es muy largo o muy corto
       }
 
+       if( std::find_if( user.begin(),user.end(), space ) != user.end() )
+       {
+          cout << "\n\tLo sentimos! El usuario no puede incluir espacios\n";
+          findError++;
+       }
+
+      // Aquí miramos si el usuario es muy largo o muy corto
       if( user.size() > 16 || user.size() < 4 )  
       {
-         cout << "\nLo sentimos! Tu nombre de usuario no cumple con los parametros. ";
+         cout << "\n\tLo sentimos! Tu nombre de usuario no cumple con los parametros. ";
          findError++;
       }
 
@@ -260,7 +270,7 @@ void Universidad::registrarExperto(){
       // Si es muy extensa o muy corta, el usuario debe repetirla
       if( password.size() < 6 || password.size() > 20 )
       {
-         cout << "\n\nLo sentimos! La contraseña no cumple con los parametros.";
+         cout << "\n\tLo sentimos! La contrasenia no cumple con los parametros.";
          findError++;
       }
 
@@ -312,28 +322,139 @@ void Universidad::registrarExperto(){
 void Universidad::consultarJurados(){
    system( "CLS()" );
    int i;
+
    for ( i = 0; i < vectorPersonas.size(); i++){
       vectorPersonas[i].consultarJurados();
    }
    system("PAUSE()");
 }
 
+// Validacion en caso de que el número esté mal añadida
 void Universidad::cerrarActa()
 {
-   int actaEscogida, i = 0;
+   int actaEscogida, i, verificarNumero = 0;
+
+   /* 
+    actaEscogida es el número de acta que indica el usuario
+    i  es el iterador
+    verificarNumero sirve de contador para verificar que si el acta existe o no, inicia en 0
+   */
+
    system( "CLS()" );
    cout << "!--Cerrar acta---!\n";
    cout << "Ingrese el numero de acta: ";
    cin >> actaEscogida;
-   if( vectorActasTrabajos.empty() == false ){
-      for( i = 0; i < vectorActasTrabajos.size(); i++){
-         if( vectorActasTrabajos[i].getNumeroActa() == actaEscogida ){
+
+   // Verifica si el vector de actas no está vacío
+   if( !vectorActasTrabajos.empty() )
+   {
+      for( i = 0; i <= vectorActasTrabajos.size(); i++ ) 
+      {
+         if( vectorActasTrabajos[i].getNumeroActa() == actaEscogida )
+        {
             vectorActasTrabajos[i].setEstadoTrabajo( CERRADA );
-            cout << "Se ha cerrado el acta\n";
-         }
+            cout << "\nSe ha cerrado el acta satisfactoriamente\n";
+            verificarNumero++;
+        }
+
+        // Si verificarNumero = 0, significa que el acta no fue encontrada y por ende, no existe
+        else if( i == vectorActasTrabajos.size() && verificarNumero == 0)
+        {
+            cout << "\nError: Numero de acta inexistente\n";
+        }
       }
-   }else{
-      cout << "No hay actas creadas\n";
-   }
-   system( "PAUSE()" );
+    }
+    else
+    {
+        cout << "No hay actas creadas\n";
+    }
+    cout << std::endl;
+    system( "PAUSE()" );
+}
+
+void Universidad::consultarTrabajoProfesor()
+{
+    int i, decisionUser, verificarProfesor = 0, contadorProfesor = 0;
+    string profesor;
+    
+    /*
+        i es el iterador para recorrer el vector
+        decisionUser funciona para saber cuando el usuario desea salir de este apartado
+        profesor almacena el nombre de profesor a verificar
+
+        verificarProfesor sirve para determinar si hay o no trabajos con el nombre de ese profesor,
+        es decir, cada vez que encuentre al profesor e imprima el nombre del trabajo, se suma 1 al 
+        contador, por ende, si se mantiene en 0 no encontró nada.
+
+        contadorProfesor cuenta el numero de trabajos de los que ha dirigido un profesor
+    */
+    do{
+        system("CLS()");
+
+        // Verificamos si está vacía, si lo está sale del do-while
+        if( vectorActasTrabajos.empty() )
+        {
+            cout << "\nLo sentimos! No hay actas creadas\n" << endl;
+            break;
+        }
+
+        cin.ignore( 30, '\n' );
+        cout << "\nDigite el nombre del profesor del cual quiere conocer los trabajos que ha dirigido: ";
+        getline( cin, profesor );
+
+        /*
+            Implementamos un do-while para que el usuario pueda ingresar el numero 
+            de profesores que desee
+        */
+
+        cout << endl;
+
+        // Recorremos el vector de actas para verificar si el profesor está
+        for( i = 0; i <= vectorActasTrabajos.size(); i++ )
+        {
+            if( vectorActasTrabajos[i].getDirector() == profesor )
+            {
+                // Imprime los el nombre de las actas si concuerda con el nombre de profesor
+                cout << vectorActasTrabajos[i].getNombreTrabajo() << endl;
+                contadorProfesor++;
+                verificarProfesor++;
+            }
+
+            else if( i == vectorActasTrabajos.size() && verificarProfesor == 0 )
+            {
+                cout << "\nLo Sentimos! Profesor inexistente.\n";
+            }
+        }
+
+        cout << endl;
+        if( verificarProfesor > 0 )
+        {
+            cout << profesor << " ha dirigido " << contadorProfesor << " trabajos\n";
+        }
+        cout << endl;
+
+        // Valida que el usuario solo pueda digitar entre 0 y 1
+        while( -1 )
+        {
+            system("PAUSE()");
+            system("CLS()");
+            // Mini menú para saber si desean continuar con buscando
+            cout << "\nDeseas buscar a otro profesor?";
+            cout << "\n0.No\n1.Si\n";
+            cout << "\nRespuesta: "; cin >> decisionUser;
+            cout << std::endl;
+
+            if( decisionUser == 1 || decisionUser == 0 )
+            {
+                break;
+            }
+            
+            else if( decisionUser != 1 || decisionUser != 0);
+            {
+                cout << "\nOpcion no valida, intente de nuevo";
+            }
+            
+        }
+        
+    } while( decisionUser != 0 );   // Si es 0, sale de este apartado
 }
