@@ -13,9 +13,14 @@ int menu(){
    cout << "6. Informacion adicional" << endl;
    cout << "0. Salir\n" << endl;
    cout << "Digita el numero: ";
-   cin >> opcion;
-   cout << endl;
-   
+
+   while( !( cin >> opcion ) )
+   {
+      cout << "\nPor favor ingrese un valor valido (numerico): ";
+      cin.clear();
+      cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n' );
+   }
+
    return opcion;
 }
 
@@ -29,9 +34,16 @@ int menu2()
    cout << "2. Actas Pendientes y Rechazadas " << endl;
    cout << "3. Jurados externos e internos" << endl;
    cout << "4. Trabajos dirigidos por profesor" << endl;
+   cout << "5. Trabajos en los que ha participado un jurado " << endl;
    cout << "0. Salir\n" << endl;
    cout << "Digita el numero: ";
-   cin >> opcion2;
+
+   while( !( cin >> opcion2 ) )
+   {
+      cout << "\nPor favor ingrese un valor valido (numerico): ";
+      cin.clear();
+      cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n' );
+   }
 
    return opcion2;
 }
