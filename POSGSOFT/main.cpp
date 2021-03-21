@@ -14,7 +14,8 @@ int main(){
    do{
       opc = menu();
 
-      switch ( opc ){
+      switch ( opc )
+      {
       case 1:
          archivo.crearActa();
          break;
@@ -31,7 +32,6 @@ int main(){
          break;
       case 6:
          do{
-
             opc2 = menu2();
 
             switch( opc2 )
@@ -48,6 +48,9 @@ int main(){
             case 4:
                archivo.consultarTrabajoProfesor();
                break;
+            case 5:
+               archivo.consultarTrabajosJurado();
+               break;
             case 0:
                break;
             default:
@@ -60,6 +63,7 @@ int main(){
       default:
          break;
       }
+
    } while ( opc != 0 );
    
    return 0;
