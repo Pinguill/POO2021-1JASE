@@ -52,7 +52,7 @@ class ActaTrabajo
         string observacionAdicional;
     public:
         ActaTrabajo();
-        ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, string, estado, aceptacion, string );
+        ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, string, estado, aceptacion );
         ~ActaTrabajo(); // Destructor para eliminar un acta, elimina TODOS los objetos después de cerrar el programa
         void eliminarActa();  
         void mostrarActa();

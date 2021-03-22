@@ -10,7 +10,7 @@ ActaTrabajo::ActaTrabajo()
 
 ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreTrabajo, trabajo tipoTrabajo, 
     string periodo, string director,  string codirector, string jurado1, string jurado2, 
-    estado estadoTrabajo, aceptacion estadoAceptacion, string observacionAdicional )
+    estado estadoTrabajo, aceptacion estadoAceptacion )
 {
     // Asignar valores 
     this -> numero = numero;
