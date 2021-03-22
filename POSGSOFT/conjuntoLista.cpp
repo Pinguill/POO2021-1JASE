@@ -623,3 +623,90 @@ void Universidad::diligenciarActa(){
    cout << "\n!--- Diligenciado completo ---!\n";
    system("PAUSE()");
 }
+
+void Universidad::diligenciarObservaciones(){ //Se encarga de guardar una observacion extra si se solicita
+   int codigoSelect, i, error = 0;
+   string observacion;
+   system("CLS()");
+   cout << "!--- Diligenciar Observaciones ---! \n";
+   cout << "Ingrese el codigo del acta: \n";
+   cin >> codigoSelect;
+   for( i = 0; i < vectorActasTrabajos.size(); i++){
+      if ( vectorActasTrabajos[i].getNumeroActa() == codigoSelect ){
+         cout << "Ingrese el dato de observacion extra: \n";
+         cin.ignore( 100, '\n' );
+         getline( cin, observacion );
+         vectorActasTrabajos[i].setObservacion( observacion );
+         error++;
+      }
+   }
+   if( error == 0 ){
+      cout << endl << "No se encontro ningun acta." << endl;
+   }
+   system("PAUSE()");
+}
+
+// Busca si existe el numero de acta y si lo encuentra y esta abierta la acta se elimina
+void Universidad::eliminarActa(){
+   int codigoSelect, i, error = 0;
+   system("CLS()");
+   cout << "!--- Eliminar Acta ---! \n";
+   cout << "Ingrese el codigo del acta: \n";
+   cin >> codigoSelect;
+   for( i = 0; i < vectorActasTrabajos.size(); i++){
+      if ( vectorActasTrabajos[i].getNumeroActa() == codigoSelect ){
+         if( vectorActasTrabajos[i].getEstadoTrabajo() == ABIERTA ){
+            vectorActasTrabajos.erase( vectorActasTrabajos.begin() + i - 1  );
+            cout << "Se ha eliminado el acta con exito.\n";
+         }else{
+            cout << "El acta se encuentra cerrada.\n";
+         }
+         error++;
+      }
+   }
+   if( error == 0 ){
+      cout << endl << "No se encontro ningun acta." << endl;
+   }
+   system("PAUSE()");
+}
+
+// Se encarga de guardar en un archivo .txt los datos del acta
+void Universidad::crearTxt(){
+   string nombreArchivo;
+   int codigoSelect, i, j, error = 0;
+   system("CLS()");
+   cout << "!--- Creacion txt ---! \n";
+   cout << "Ingrese el codigo del acta: \n";
+   cin >> codigoSelect;
+   for( i = 0; i < vectorActasTrabajos.size(); i++){
+      if ( vectorActasTrabajos[i].getNumeroActa() == codigoSelect ){
+         cout << "Ingrese el nombre del archivo a crear: \n";
+         cin.ignore( 100, '\n' );
+         cin >> nombreArchivo;
+         ofstream archivoActa( nombreArchivo );
+         archivoActa << this->vectorActasTrabajos[i].getNumeroActa() << "         " << this->vectorActasTrabajos[i].getNumeroActa() << endl;
+         archivoActa << "         ACTA DE EVALUACION DE TRABAJO DE GRADO" << endl;
+         archivoActa << "         " << this->vectorActasTrabajos[i].getNombreTrabajo() << endl;
+         archivoActa << "Autor: "<< this->vectorActasTrabajos[i].getAutor() << endl;
+         archivoActa << "Periodo: "<< this->vectorActasTrabajos[i].getPeriodo() << endl;
+         archivoActa << "Director: "<< this->vectorActasTrabajos[i].getDirector() << endl;
+         archivoActa << "Co-Director: "<< this->vectorActasTrabajos[i].getCodirector() << endl;
+         archivoActa << "Jurado 1: "<< this->vectorActasTrabajos[i].getJuradoUno() << endl;
+         archivoActa << "Jurado 2: "<< this->vectorActasTrabajos[i].getJuradoDos() << endl;
+         for( j = 0; j < 8; j++){
+            archivoActa << j + 1 << ". "<< this->vectorActasTrabajos[i].getIdentificador( j ) << "\n";
+            archivoActa << "Calificacion Parcial: " << this->vectorActasTrabajos[i].getNotaCriterio( j ) << "            Ponderacion: " << this->vectorActasTrabajos[i].getPonderado( j ) << "%" <<endl;
+            archivoActa << "Observaciones: " << this->vectorActasTrabajos[i].getComentario( j ) << endl;
+            archivoActa << "-------------------------------------------------------------------------------" << endl;
+            archivoActa << "-------------------------------------------------------------------------------" << endl;
+         }
+         archivoActa << "Observaciones adicionales: " << this->vectorActasTrabajos[i].getObservacion();
+         cout << endl << "Archivo creado con exito." << endl;
+         error++;
+      }
+   }
+   if( error == 0 ){
+      cout << endl << "No se encontro ningun acta." << endl;
+   }
+   system("PAUSE()");
+}

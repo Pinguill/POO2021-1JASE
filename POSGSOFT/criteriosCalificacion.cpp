@@ -22,6 +22,10 @@ void Criterio::setNota( float nota ){
    this->notaCriterio = result;
 }
 
+string Criterio::getComentario(){
+   return this->mensajeJurado;
+}
+
 void Criterio::setComentario( string comentario ){
    this->mensajeJurado = comentario;
 }

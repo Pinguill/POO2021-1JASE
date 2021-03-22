@@ -10,7 +10,7 @@ ActaTrabajo::ActaTrabajo()
 
 ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreTrabajo, trabajo tipoTrabajo, 
     string periodo, string director,  string codirector, string jurado1, string jurado2, 
-    estado estadoTrabajo, aceptacion estadoAceptacion )
+    estado estadoTrabajo, aceptacion estadoAceptacion, string observacionAdicional )
 {
     // Asignar valores 
     this -> numero = numero;
@@ -25,6 +25,7 @@ ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreT
     this -> jurado2 = jurado2;
     this -> estadoTrabajo = estadoTrabajo;
     this -> estadoAceptacion = estadoAceptacion;
+    this -> observacionAdicional = "";
 
     Criterio criterio1 ( "Desarrollo y profundidad en el tratamiento del tema",20,"",0.0 );
     Criterio criterio2 ( "Desafio academico y cientifico del tema",15,"",0.0 );;
@@ -55,6 +56,38 @@ void ActaTrabajo::calcularNotaFinal(){
       sumaNota += conjuntoCriterio[i].getNotaCriterio();
    }
    this->notaFinal = sumaNota;
+}
+
+void ActaTrabajo::setObservacion( string observacion ){
+   this->observacionAdicional = observacion;
+}
+
+string ActaTrabajo::getAutor(){
+   return this->autor;
+}
+
+string ActaTrabajo::getPeriodo(){
+   return this->periodo;
+}
+
+string ActaTrabajo::getCodirector(){
+   return this->codirector;
+}
+
+float ActaTrabajo::getNotaCriterio( int j ){
+   return conjuntoCriterio[j].getNotaCriterio();
+}
+
+float ActaTrabajo::getPonderado( int j ){
+   return conjuntoCriterio[j].getPonderado();
+}
+
+string ActaTrabajo::getObservacion(){
+   return this->observacionAdicional;
+}
+
+string ActaTrabajo::getComentario( int j ){
+   return conjuntoCriterio[j].getComentario();
 }
 
 float ActaTrabajo::getNotaFinal(){
@@ -100,17 +133,6 @@ void ActaTrabajo::setEstadoAceptacion( aceptacion estado ){
 
 void ActaTrabajo::setComentario( string comentario, int tipo ){
    conjuntoCriterio[tipo].setComentario( comentario );
-}
-
-void ActaTrabajo::calificarCriterios()
-{
-}
-int ActaTrabajo::calificarNotaFinal()
-{
-   return 0;
-}
-void ActaTrabajo::addComentario()
-{
 }
 
 void ActaTrabajo::mostrarActa(){

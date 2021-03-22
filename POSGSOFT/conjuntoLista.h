@@ -7,11 +7,14 @@
 #include <vector>
 #include <cctype>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 
 using std::vector;
 using std::string;
 using std::cout;
 using std::cin;
+using std::ofstream;
 
 class Universidad{
    private:
@@ -36,6 +39,9 @@ class Universidad{
       void consultarTrabajosJurado();
       void consultarListaJurados(); // Consultar lista de jurados en las actas sin repetir
       void diligenciarActa();
+      void diligenciarObservaciones();
+      void eliminarActa();
+      void crearTxt();
 };
 
 #endif

@@ -27,6 +27,7 @@ class Criterio{
       void setComentario( string );
       float getNotaCriterio();
       float getPonderado();
+      string getComentario();
 };
 
 #endif

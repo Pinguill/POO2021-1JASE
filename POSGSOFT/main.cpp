@@ -26,14 +26,21 @@ int main(){
          archivo.registrarExperto();
          break;
       case 4:
-         break;
-      case 5:
          archivo.cerrarActa();
          break;
-      case 6:
+      case 5:
          archivo.diligenciarActa();
          break;
+      case 6:
+         archivo.diligenciarObservaciones();
+         break;
       case 7:
+         archivo.eliminarActa();
+         break;
+      case 8:
+         archivo.crearTxt();
+         break;
+      case 9:
          do{
             opc2 = menu2();
 
