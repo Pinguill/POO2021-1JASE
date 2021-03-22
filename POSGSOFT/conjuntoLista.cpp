@@ -6,10 +6,21 @@ Universidad::Universidad(){
 void Universidad::mostrarActas(){
    system( "CLS()" );
    int i;
-
-   for ( i = 0; i < vectorActasTrabajos.size(); i++){
-      vectorActasTrabajos[i].mostrarActa();
+   
+   // Miramos si no está vacía
+   if( vectorActasTrabajos.empty() )
+   {
+      // Recorre el vector e imprime
+      for ( i = 0; i < vectorActasTrabajos.size(); i++){
+         vectorActasTrabajos[i].mostrarActa();
+      }
    }
+   // Si está vacía, arroja un mensaje especial
+   else
+   {
+       cout << "\nLo sentimos! No hay actas creadas\n" << endl;
+   }
+   system( "PAUSE()");
 }
 
 void Universidad::crearActa()
@@ -19,21 +30,23 @@ void Universidad::crearActa()
     int i = 0, numero = 1000; // Contador del numero de acta
     time_t now = time( 0 );
     char* dt = ctime( &now ); // Dt = day time, pasa la hora/dia actual a un char
-    int opcTipoTrabajo;
-    int existenciaCodirector;
+    int opcTipoTrabajo; // Opción dada en el menú para mirar el tipo de trabajo (aplicado - investigacion)
+    int opcIngresoJurado1;  // opcion del usuario para saber si registrar o no al jurado1
+    int opcIngresoJurado2; // opcion del usuario para saber si registrar o no al jurado2
+    int existenciaCodirector; // Opción dada en el menú para rectificar si hay o no codirecto
     trabajo tipoTrabajo;
-    aceptacion estadoAceptacion;
-    estado estadoTrabajo;
-    bool existeCodirector;
+    aceptacion estadoAceptacion;    // Pendiente-Rechazado-Aceptado
+    estado estadoTrabajo;   // Abierto - Cerrado
     fecha = dt;
-    numero++;
+    numero++;  // Número del acta incrementa en 1 cada vez que se crea una
 
     system( "CLS()" );
     cout << "\n!---Ingrese los siguientes datos---!\n";
     cin.ignore(100,'\n');
     cout << "\nNombre del autor: "; getline(cin, autor) ;
     cout << "\nNombre del trabajo: "; getline(cin, nombreTrabajo);
-    
+
+    // Hacemos un bucle infinito hasta que el usuario digite los datos satisfactoriamente  
     while( 1 )
     {
         // Implementamos un mini-menu para establecer el tipo de trabajo 
@@ -52,6 +65,7 @@ void Universidad::crearActa()
             cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n');
         }
 
+        // Asigna valores si el numero ingresado es correcto ( 1 - 0 ) y sale del bucle
         if( opcTipoTrabajo == 1 )
         {
             tipoTrabajo = trabajo::INVESTIGACION;
@@ -66,7 +80,8 @@ void Universidad::crearActa()
             break;   
         }
 
-        else
+        // Si el número no es valido, arroja mensaje y vuelve a pedir el numero
+        else   
         {
             cout << "\n\tValor invalido\n";
             cout << endl;
@@ -76,12 +91,14 @@ void Universidad::crearActa()
     cin.ignore(100,'\n');
     cout << "\nDirector: "; getline(cin, director);
 
+    // Bucle infinito hasta que los datos pedidos sean correctos
     while( 1 )
     {
         cout << "\nHay codirector?";
         cout << "\n0. No\n1. Si\n";
         cout << " "; 
 
+        // Bucle infinito hasta que el valor ingresado sea correcto
         while( !( cin >> existenciaCodirector ) )
         {
             cout << "\nPor favor, ingrese un valor valido (numerico): ";
@@ -93,7 +110,6 @@ void Universidad::crearActa()
         if( existenciaCodirector == 0 )   
         {
             cin.ignore( 100, '\n' );
-            existeCodirector = true;
             codirector = "NA";
             break;           
         }
@@ -101,7 +117,6 @@ void Universidad::crearActa()
         else if( existenciaCodirector == 1 )  
         {
             cin.ignore( 100, '\n' );
-            existeCodirector = true;
             cout << "\nCodirector: "; getline(cin, codirector);
             break;
         }
@@ -115,15 +130,82 @@ void Universidad::crearActa()
     }
     
     cout << "\nJurado 1: "; getline(cin, jurado1);
+    cout << "\nYa te has registrado? ";
+    cout << "\n0.No\n1.Si\n";
+
+    // Entra en bucle hasta que ingrese un valor valido
+    while( 1 )
+    {
+        // Bucle hasta que el usuario ingrese un valor valido
+        while( !( cin >> opcIngresoJurado1 ) )
+        {
+            cout << "\nIngrese un valor valido: ";
+            cin.clear();
+            cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n' );
+        }
+
+        // Mira la opcion y mira si es 0 o 1, caso contrario, vuele al inicio del ciclo
+        if( opcIngresoJurado1 == 0 )
+        {
+            registrarExperto();
+            break;
+        }
+        else if( opcIngresoJurado1 == 1 )
+        {
+            break;
+        }
+        else
+        {
+            cout << "\n\tValor invalido";
+        }
+    }
+
+    cout << endl;
+
+    cin.ignore( 30, '\n' );
     cout << "\nJurado 2: "; getline(cin, jurado2);
+    cout << "\nYa te has registrado? ";
+    cout << "\n0.No\n1.Si\n";
+
+    // Entra en bucle hasta que ingrese un valor valido
+    while( 1 )
+    {
+        while( !( cin >> opcIngresoJurado2 ) )
+        {
+            cout << "\nIngrese un valor valido: ";
+            cin.clear();
+            cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n' );
+        }
+
+        // Mira la opcion y mira si es 0 o 1, caso contrario, vuele al inicio del ciclo
+        if( opcIngresoJurado2 == 0 )
+        {
+            registrarExperto();
+            break;
+        }
+        else if( opcIngresoJurado2 == 1 )
+        {
+            break;
+        }
+        else
+        {
+            cout << "\n\tValor invalido";
+        }
+    }
+
+    cout << endl;
+
+    cin.ignore( 30, '\n' );
     cout << "\nPeriodo: "; getline(cin, periodo);
     cout << "\n\nImportante: El numero del acta es: " << numero << std::endl;
 
     cout << "\n\n";
+
+    // Ponemos al acta en estado pendiente y abierta
     estadoAceptacion = aceptacion::PENDIENTE;
     estadoTrabajo = estado::ABIERTA;
     ActaTrabajo newActa( numero, fecha, autor, nombreTrabajo, tipoTrabajo, periodo, director, codirector, jurado1, jurado2, estadoTrabajo, estadoAceptacion );
-    this->vectorActasTrabajos.push_back( newActa );
+    this->vectorActasTrabajos.push_back( newActa ); // Aquí la agregamos al vecto de actastrabajos
 
     system( "PAUSE()" );
     system( "CLS()" );
@@ -186,6 +268,7 @@ void Universidad::consultarTipoTrabajo(){
 void Universidad::consultarEstadoAceptacion(){
     system( "CLS()");
     int i, contadorEspecial;    
+
     /* 
         ContadorEspecial sirve para notificar mensaje especial en caso de que 
         no hayan actas pendientes o rechazadas
@@ -193,31 +276,37 @@ void Universidad::consultarEstadoAceptacion(){
 
     cout << "\nActas Pendientes:\n";
     contadorEspecial = 0;
+
+    // Recorremos el vector de actas trabajos 
     for( i = 0; i < vectorActasTrabajos.size(); i++ )
     {
+        // Miramos cuales son pendientes e imprimimos
         if(  vectorActasTrabajos[i].getEstadoAceptacion() == aceptacion::PENDIENTE )
         {
             cout << "\n" <<  vectorActasTrabajos[i].getNombreTrabajo();
-            contadorEspecial++;
+            contadorEspecial++; // Sumamos +1 al contador
         }
     }
 
-    if( contadorEspecial == 0 )
+    // Si el contador es 0, es por que no hay actas pendientes
+    if( contadorEspecial == 0 ) 
     {
         cout << "No hay ningun acta pendiente momentaneamente.\n";
     }
 
     cout << '\n';
     cout << "\nActas Rechazadas:\n";
-    contadorEspecial = 0;
+    contadorEspecial = 0;   // Reseteamos el contador a 0
     for( i = 0; i < vectorActasTrabajos.size(); i++ )
     {
+        // Recorremos el vector de actas trabajos  e imprimimos las rechazadas
         if(  vectorActasTrabajos[i].getEstadoAceptacion() == aceptacion::RECHAZADO )
         {
             cout << "\n" <<  vectorActasTrabajos[i].getNombreTrabajo();
-            contadorEspecial++;
+            contadorEspecial++; // Sumamos +1 al contador
         }
     }
+    // Si el contador es 0, es por que no hay actas pendientes
     if( contadorEspecial == 0 )
     {
         cout << "No hay ningun acta rechazada momentaneamente.\n";
@@ -232,8 +321,7 @@ void Universidad::registrarExperto(){
    int (*space)(int) = std::isspace;    //Funcion que determina el caracter de "espacio"
    
    string user, password, nombre;
-   sectorExperto sector;
-   ingreso registro;
+   sectorExperto sector;    // Hace referencia a si el jurado es profesor interno o externo
 
    system("CLS()");
    cin.ignore( 40, '\n' );
@@ -261,6 +349,11 @@ void Universidad::registrarExperto(){
             break;
          }
       }
+       
+       /*
+            fin_if se va a encargar de buscar espacios, el nombre de usuario no puede tener especios
+            En caso de tenerlo, imprime mensaje y sumamos +1 a findError
+       */
 
        if( std::find_if( user.begin(),user.end(), space ) != user.end() )
        {
@@ -272,9 +365,10 @@ void Universidad::registrarExperto(){
       if( user.size() > 16 || user.size() < 4 )  
       {
          cout << "\n\tLo sentimos! Tu nombre de usuario no cumple con los parametros.\n" << endl;
-         findError++;
+         findError++;   // Si hay error encontrado sumamos +1 al contador
       }
-
+      
+      // Si findError es 0, no hubo problemas en la creación del usuario
       if( findError == 0 ){
          break;
       }
@@ -312,13 +406,14 @@ void Universidad::registrarExperto(){
       cout << "0.No\n1.Si" << std::endl;
       cout << " ";
       
+      // Entra en bucle hasta que ingrese un valor valido
       while( !( cin >> opcSector ) )
       {
           cout << "\nPor favor, ingrese un valor valido (numerico): ";
           cin.clear();
           cin.ignore( std::numeric_limits< std::streamsize > ::max(), '\n' );
       }
-
+      // Aquí asignamos el tipo de sector y sale del bucle si el número concuerda
       if( opcSector == 0 )
       {
          sector = EXTERNO;
@@ -329,16 +424,15 @@ void Universidad::registrarExperto(){
          sector = INTERNO;
          break;
       }
+      // Si no es valido, vuelve al inicio el bucle
       else
       {
          cout << "\n\tValor invalido, intente de nuevo" << endl;
          cout << endl;
       }
    }
-
-   registro = REGISTRADO;
-
-   // Aui podriamos poner el sleep
+   
+   // Ingresamos los datos al vector de vectorPersonas
    Experto newjurado( user, password, sector, nombre );
    vectorPersonas.push_back ( newjurado );
    cout << "\n\nFelicitaciones: Has sido registrado satisfactoriamente\n\n" << std::endl;;
@@ -347,14 +441,74 @@ void Universidad::registrarExperto(){
 }
 
 void Universidad::consultarJurados(){
-   system( "CLS()" );
-   int i;
+   int i, contadorInternos = 0, contadorExternos = 0;
+   vector <string> juradosInternos;
+   vector <string> juradosExternos;
 
-   for ( i = 0; i < vectorPersonas.size(); i++){
-      vectorPersonas[i].consultarJurados();
+   /*
+    i es el iterador
+    contadorInterno y contadorExterno sirven para verificar si no hay jurados internos y externos respectivamente
+    juradosInternos almacena todos los juradosInternos
+    juradosExernos almacena todos los juradosExternos
+   */
+
+   system("CLS()");
+
+   // Verificamos que no esté vacío
+   if( !( vectorPersonas.empty() ) )
+   {
+       // Recorremos el vector
+      for ( i = 0; i < vectorPersonas.size(); i++)
+      {
+         if( vectorPersonas[i].consultarJurados() )
+         {
+            // Si el metodo anterior retorna true, añadimos el nombre al vector juradosInternos
+            juradosInternos.push_back( vectorPersonas[i].getNombre() );   // Si es true, 
+         }
+         else
+         {
+            // Si el metodo anterior retorna false, añadimos el nombre al vector juradosExternos
+            juradosExternos.push_back( vectorPersonas[i].getNombre() );
+         }
+      }
+
+      // Imprimimos los jurados internos
+      cout << "\nJurados Internos:\n" << endl;
+      for( i = 0; i < juradosInternos.size(); i++ )
+      {
+          cout << juradosInternos[i] << endl;
+          contadorInternos++;  // Sumamos +1 al contador cada vez que imprima uno 
+      }
+      if( contadorInternos == 0 )
+      {
+        // Si el contador es 0, significa que no hay jurados internos
+        cout << "\nNo hay jurados internos momentaneamente\n";
+      }
+
+      cout << endl;
+
+      // Imprimimos los jurados externos
+      cout << "Jurados externos:\n" << endl;
+      for( i = 0; i < juradosExternos.size(); i++ )
+      {
+          cout << juradosExternos[i] << endl;
+          contadorExternos++; // Sumamos +1 al contador cada vez que imprima uno 
+      }
+      if( contadorExternos == 0 )
+      {
+        // Si el contador es 0, significa que no hay jurados externos
+        cout << "\nNo hay jurados externos momentaneamente\n";
+      }
    }
+   // Si está vacía, imprimimos un mensaje especial 
+   else{
+       cout << "\nLo sentimos! No hay actas creadas\n" << endl;
+   }
+
+   cout << endl;
    system("PAUSE()");
 }
+
 
 // Validacion en caso de que el número esté mal añadida
 void Universidad::cerrarActa()
@@ -369,35 +523,53 @@ void Universidad::cerrarActa()
 
    system( "CLS()" );
    cout << "!--Cerrar acta---!\n";
-   cout << "Ingrese el numero de acta: ";
-   cin >> actaEscogida;
+   cout << "\nIngrese el numero de acta: ";
+
+   // Entra en bucle hasta que ingrese un valor correcto
+   while( !( cin >> actaEscogida ) )
+   {
+       cout << "\nIngrese un valor valido (numerico): ";
+       cin.clear();
+       cin.ignore( std::numeric_limits < std::streamsize > ::max() );
+   }
 
    // Verifica si el vector de actas no está vacío
-   if( !vectorActasTrabajos.empty() )
+   if( !( vectorActasTrabajos.empty() ) )
    {
+       // Recorremos el vector
       for( i = 0; i <= vectorActasTrabajos.size(); i++ ) 
       {
+          // Verificamos en numero del acta con las ya registradas
          if( vectorActasTrabajos[i].getNumeroActa() == actaEscogida )
         {
+            // Cambiamos el estado a cerrada y eliminadas
             vectorActasTrabajos[i].setEstadoTrabajo( CERRADA );
             cout << "\nSe ha cerrado el acta satisfactoriamente\n";
             verificarNumero++;
-            if( vectorActasTrabajos[i].getNotaFinal() <= 35 ){
+
+            // Si la nota final es menor a 3.5, es rechazado, si es mayor o igual, aceptado 
+            if( vectorActasTrabajos[i].getNotaFinal() < 35 ){
                vectorActasTrabajos[i].setEstadoAceptacion( aceptacion::RECHAZADO );
+            }
+            else{
+               vectorActasTrabajos[i].setEstadoAceptacion( aceptacion::ACEPTADO ); 
             }
         }
 
         // Si verificarNumero = 0, significa que el acta no fue encontrada y por ende, no existe
         else if( i == vectorActasTrabajos.size() && verificarNumero == 0)
         {
-            cout << "\nError: Numero de acta inexistente\n";
+            cout << "\n\tError: Numero de acta inexistente\n";
         }
       }
     }
-    else
+
+    // Si está vacío, imprimimos mensaje especial
+    else    
     {
-        cout << "No hay actas creadas\n";
+        cout << "\nLo sentimos! No hay actas creadas\n";
     }
+
     cout << std::endl;
     system( "PAUSE()" );
 }
@@ -421,6 +593,7 @@ void Universidad::consultarTrabajoProfesor()
         Implementamos un do-while para que el usuario pueda ingresar el numero 
         de profesores que desee
     */
+
     do{
         system("CLS()");
 
@@ -437,16 +610,18 @@ void Universidad::consultarTrabajoProfesor()
         cout << endl;
 
         // Recorremos el vector de actas para verificar si el profesor está
-        for( i = 0; i <= vectorActasTrabajos.size(); i++ )
+        for( i = 0; i < vectorActasTrabajos.size(); i++ )
         {
+            // Comparamos cada acta y miramos el nombre de directo, se compara con el nombre ingresado
             if( vectorActasTrabajos[i].getDirector() == profesor )
             {
-                // Imprime los el nombre de las actas si concuerda con el nombre de profesor
+                // Imprime el nombre de las actas si concuerda con el nombre de profesor
                 cout << vectorActasTrabajos[i].getNombreTrabajo() << endl;
                 contadorProfesor++;
                 verificarProfesor++;
             }
 
+            // Si verificarProfesor = 0, no fue encontrado el profesor
             else if( i == vectorActasTrabajos.size() && verificarProfesor == 0 )
             {
                 cout << "\nLo Sentimos! Profesor inexistente.\n";
@@ -454,6 +629,8 @@ void Universidad::consultarTrabajoProfesor()
         }
 
         cout << endl;
+
+        // Si verificarProfesor > 0, entra e imprime el número de trabajos que ha dirigido 
         if( verificarProfesor > 0 )
         {
             cout << profesor << " ha dirigido " << contadorProfesor << " trabajos\n";
@@ -470,6 +647,7 @@ void Universidad::consultarTrabajoProfesor()
             cout << "\n0.No\n1.Si\n";
             cout << " ";
 
+            // Verificamos que el usuario ingrese si o si un integer
             while( !( cin >> decisionUser ) )
             {
                 cout << "\nPor favor, ingrese un valor valido (numerico): ";
@@ -482,13 +660,13 @@ void Universidad::consultarTrabajoProfesor()
             if( decisionUser == 1 || decisionUser == 0 )
             {
                 break;
-            }        
+            }
+            //Si el numero es diferente a 0 o 1, entra en bucle infinito hasta que ingrese uno de ellos        
             else
             {
                 cout << "\n\tOpcion no valida, intente de nuevo\n";
                 cout << endl;
             }
-            
         }
         
     } while( decisionUser != 0 );   // Si es 0, sale de este apartado
@@ -500,6 +678,13 @@ void Universidad::consultarTrabajosJurado()
 {
     int i, decisionUser, contadorJurado = 0;
     string jurado;
+
+    /*
+        i = iterador
+        decisionUser se encargará de ser la opcion elegida en un menú abajo
+        contadorJurado para rectificar que el jurado haya o no haya sido encontradoo
+        jurado almacena el nombre del jurado escrito por el usuario
+    */
 
     do{
         system("CLS()");
@@ -526,9 +711,9 @@ void Universidad::consultarTrabajosJurado()
                 contadorJurado++;
             }
         }
-        if( contadorJurado == 0 )
+        if( contadorJurado == 0 )   // Si es 0 es porque no hay ningun jurado
         {
-            cout << "\nLo Sentimos! Profesor inexistente.\n";
+            cout << "\nLo Sentimos! Jurado inexistente.\n";
         }
         cout << endl; 
 
@@ -538,10 +723,11 @@ void Universidad::consultarTrabajosJurado()
             system("PAUSE()");
             system("CLS()");
             // Mini menú para saber si desean continuar con buscando
-            cout << "\nDeseas buscar a otro profesor?";
+            cout << "\nDeseas buscar a otro jurado?";
             cout << "\n0.No\n1.Si\n";
             cout << " ";
 
+            // Verificamos que el usuario ingrese un valor numerico
             while( !( cin >> decisionUser ) )
             {
                 cout << "\nPor favor, ingrese un valor valido (numerico): ";
@@ -555,6 +741,7 @@ void Universidad::consultarTrabajosJurado()
             {
                 break;
             }        
+            // Si es diferente a 0 o 1, entra a bucle infinito hasta que ingrese uno de ellos
             else
             {
                 cout << "\n\tOpcion no valida, intente de nuevo\n";
@@ -567,22 +754,84 @@ void Universidad::consultarTrabajosJurado()
     system( "PAUSE()" );
 }
 
+void Universidad::consultarListaJurados()
+{
+    vector <string> jurados;
+    int i;
+
+    /*
+        i = iterador
+        jurados es un string que almacenará todos los jurados con sus repetidos
+    */
+
+    system("CLS()");
+
+    // Si no está vacío el vector de actas trabajos (almacena actas), continúa
+    if( !( vectorActasTrabajos.empty() ) )
+    {
+        for( i = 0; i < vectorActasTrabajos.size(); i++ )   
+        {
+            // Incluimos en el vector de jurados todos los jurados que hayan en las actas
+            jurados.push_back( vectorActasTrabajos[i].getJuradoUno() );
+            jurados.push_back( vectorActasTrabajos[i].getJuradoDos() );
+        }
+
+        // Sort organizará la vector de jurados (A-Z)
+        std::sort( jurados.begin(), jurados.end() );    
+
+        // Erase y Unique se van a encargar de eliminar y seleccionar repetidos respectivamente    
+        jurados.erase( std::unique( jurados.begin(), jurados.end() ), jurados.end() );
+
+        for( i = 0; i < jurados.size(); i++ )
+        {
+            cout << jurados[i] << endl; //En este vector, solo están los nombres únicos
+        }
+        
+        cout << endl;
+    }
+    // Si está vacío, imprime mensaje especial y termina este apartado
+    else
+    {
+        cout << "\nLo sentimos! No hay actas creadas\n" << endl;
+    }
+
+    system("PAUSE()");
+}
+
 void Universidad::diligenciarActa(){
    int i, codigoSelect, tipo, x, error;
    float nota1, nota2, notaFinal;
    string comentario;
+
    system("CLS()");
    cout << "!--- Diligenciar Acta ---! \n";
-   cout << "Ingrese el codigo del acta: \n";
-   cin >> codigoSelect;
+   cout << "\nIngrese el codigo del acta: \n";
+
+   // Miramos que el valor ingresado sea un integer
+   while( !( cin >> codigoSelect ) ) 
+   {
+       cout << "Ingrese un valor valido (numerico): ";
+       cin.clear();
+       cin.ignore( std::numeric_limits < std::streamsize > ::max() );
+   }
+
    for( i = 0; i < vectorActasTrabajos.size(); i++){
       if ( vectorActasTrabajos[i].getNumeroActa() == codigoSelect ){
          for ( tipo = 0; tipo < 8; tipo++){
+             cout << endl;
             cout << tipo + 1 << ". "<< vectorActasTrabajos[i].getIdentificador( tipo ) << "\n";
+
             while( 1 ){
                error = 0;
                cout << "Ingrese la nota del jurado 1 (0.0 - 5.0): \n";
-               cin >> nota1;
+               while( !( cin >> nota1 ) )
+
+               {
+                   cout << "\nIngrese un valor valido (numerico): ";
+                   cin.clear();
+                   cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n' );
+               }
+
                if( nota1 < 0 || nota1 > 5 ){
                   cout << "\n\tLo sentimos! La nota se excede de los rangos.\n";
                   error++;
@@ -591,11 +840,19 @@ void Universidad::diligenciarActa(){
                   break;
                }
             }
+
             while( 1 ){
                error = 0;
                cin.ignore( 100, '\n' );
                cout << "Ingrese la nota del jurado 2 (0.0 - 5.0): \n";
-               cin >> nota2;
+
+               while( !( cin >> nota2 ) )
+               {
+                   cout << "\nIngrese un valor valido (numerico): ";
+                   cin.clear();
+                   cin.ignore( std::numeric_limits < std::streamsize > ::max(), '\n' );                   
+               }
+
                if( nota2 < 0 || nota2 > 5 ){
                   cout << "\n\tLo sentimos! La nota se excede de los rangos.\n";
                   error++;
@@ -605,7 +862,7 @@ void Universidad::diligenciarActa(){
                }
             }
             vectorActasTrabajos[i].setNota( nota1, nota2, tipo );
-            cout << "Ingrese el comentraio del criterio: \n";
+            cout << "\nIngrese el comentraio del criterio: \n";
             cin.ignore( 100, '\n' );
             getline( cin, comentario );
             vectorActasTrabajos[i].setComentario( comentario, tipo );
@@ -674,6 +931,7 @@ void Universidad::eliminarActa(){
 void Universidad::crearTxt(){
    string nombreArchivo;
    int codigoSelect, i, j, error = 0;
+
    system("CLS()");
    cout << "!--- Creacion txt ---! \n";
    cout << "Ingrese el codigo del acta: \n";
@@ -693,6 +951,7 @@ void Universidad::crearTxt(){
          archivoActa << "Co-Director: "<< this->vectorActasTrabajos[i].getCodirector() << endl;
          archivoActa << "Jurado 1: "<< this->vectorActasTrabajos[i].getJuradoUno() << endl;
          archivoActa << "Jurado 2: "<< this->vectorActasTrabajos[i].getJuradoDos() << endl;
+         
          for( j = 0; j < 8; j++){
             archivoActa << j + 1 << ". "<< this->vectorActasTrabajos[i].getIdentificador( j ) << "\n";
             archivoActa << "Calificacion Parcial: " << this->vectorActasTrabajos[i].getNotaCriterio( j ) << "            Ponderacion: " << this->vectorActasTrabajos[i].getPonderado( j ) << "%" <<endl;
