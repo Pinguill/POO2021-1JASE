@@ -57,6 +57,10 @@ void ActaTrabajo::calcularNotaFinal(){
    this->notaFinal = sumaNota;
 }
 
+float ActaTrabajo::getNotaFinal(){
+   return this->notaFinal;
+}
+
 trabajo ActaTrabajo::getTipoTrabajo(){
    return this->tipoTrabajo;
 }
