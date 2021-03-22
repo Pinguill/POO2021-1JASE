@@ -16,8 +16,11 @@ string Criterio::mostrarIdentificador(){
    return this->identificador;
 }
 
+
 void Criterio::setNota( float nota ){
+   // Obtenemos la nota del criterio
    float result;
+
    result = nota * (this->ponderado / 100);
    this->notaCriterio = result;
 }

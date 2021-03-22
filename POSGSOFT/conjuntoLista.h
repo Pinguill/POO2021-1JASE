@@ -20,9 +20,9 @@ class Universidad{
    private:
       int contadorTrabajoAplicado = 0; 
       int contadorTrabajoInvestigacion= 0;
-      vector <Experto> vectorPersonas;
-      vector <ActaTrabajo> vectorActasTrabajos;
-      vector <Criterio> vectorCriterios;
+      vector <Experto> vectorPersonas; // Almacena a los jurados
+      vector <ActaTrabajo> vectorActasTrabajos; // Almacena las actas
+      vector <Criterio> vectorCriterios;  // Almacena los criterios
 
    public:
       Universidad();
