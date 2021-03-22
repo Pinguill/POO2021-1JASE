@@ -340,7 +340,7 @@ void Universidad::registrarExperto(){
 
    // Aui podriamos poner el sleep
    Experto newjurado( user, password, sector, nombre );
-   vectorPersonas.push_back (newjurado );
+   vectorPersonas.push_back ( newjurado );
    cout << "\n\nFelicitaciones: Has sido registrado satisfactoriamente\n\n" << std::endl;;
    system( "Pause()" );
    system( "CLS()" );
@@ -511,13 +511,13 @@ void Universidad::consultarTrabajosJurado()
             break;
         }
 
-        cin.ignore( 30, '\n' );
+        cin.ignore( 1000, '\n' );
         cout << "\nDigite el nombre del jurado del cual quiere conocer los trabajos que ha dirigido: ";
         getline( cin, jurado );
         cout << endl;
 
-        // Recorremos el vector de actas para verificar si el profesor está
-        for( i = 0; i <= vectorActasTrabajos.size(); i++ )
+        // Recorremos el vector de actas para verificar si el jurado está
+        for( i = 0; i < vectorActasTrabajos.size(); i ++)
         {
             if( vectorActasTrabajos[i].getJuradoUno() == jurado || vectorActasTrabajos[i].getJuradoDos() == jurado )
             {
@@ -525,14 +525,12 @@ void Universidad::consultarTrabajosJurado()
                 cout << vectorActasTrabajos[i].getNombreTrabajo() << endl;
                 contadorJurado++;
             }
-
-            else if( i == vectorActasTrabajos.size() && contadorJurado == 0 )
-            {
-                cout << "\nLo Sentimos! Profesor inexistente.\n";
-            }
         }
-
-        cout << endl;
+        if( contadorJurado == 0 )
+        {
+            cout << "\nLo Sentimos! Profesor inexistente.\n";
+        }
+        cout << endl; 
 
         // Valida que el usuario solo pueda digitar entre 0 y 1
         while( 1 )
