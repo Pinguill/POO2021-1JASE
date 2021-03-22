@@ -38,6 +38,7 @@ class Experto{
       void consultarJurados(); // Consulta jurados externos e internos
       void getExperto();
       string getUsuario();
+      string getPass();
 };
 
 #endif

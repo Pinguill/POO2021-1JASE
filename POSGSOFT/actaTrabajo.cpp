@@ -1,6 +1,4 @@
-#include <iostream>
 #include "actaTrabajo.h"
-#include "conjuntoLista.h"
 
 using std::cout;
 using std::cin;
@@ -27,10 +25,36 @@ ActaTrabajo::ActaTrabajo( int numero, string fecha, string autor, string nombreT
     this -> jurado2 = jurado2;
     this -> estadoTrabajo = estadoTrabajo;
     this -> estadoAceptacion = estadoAceptacion;
+
+    Criterio criterio1 ( "Desarrollo y profundidad en el tratamiento del tema",20,"",0.0 );
+    Criterio criterio2 ( "Desafio academico y cientifico del tema",15,"",0.0 );;
+    Criterio criterio3 ( "Cumplimiento de objetivos propuestos",10,"",0.0 );;
+    Criterio criterio4 ( "Creatividad e innovacion de las soluciones y desarrollos propuestos",10,"",0.0 );;
+    Criterio criterio5 ( "Validez de los resultados y conclusiones",10,"",0.0 );;
+    Criterio criterio6 ( "Manejo y procesamiento de informacion y bibliografia",10,"",0.0 );;
+    Criterio criterio7 ( "Calidad y presentacion del documento escrito",7.5,"",0.0 );;
+    Criterio criterio8 ( "Presentacion oral",7.5,"",0.0 );;
+    conjuntoCriterio.push_back(criterio1);
+    conjuntoCriterio.push_back(criterio2);
+    conjuntoCriterio.push_back(criterio3);
+    conjuntoCriterio.push_back(criterio4);
+    conjuntoCriterio.push_back(criterio5);
+    conjuntoCriterio.push_back(criterio6);
+    conjuntoCriterio.push_back(criterio7);
+    conjuntoCriterio.push_back(criterio8);
 }
 
 // Destructor, lo dejaremos vacío, para indicar que el acta esté cerrada de forma efectiva, lo haremos en el main 
 ActaTrabajo::~ActaTrabajo(){
+}
+
+void ActaTrabajo::calcularNotaFinal(){
+   int i;
+   float sumaNota = 0;
+   for( i = 0; i < conjuntoCriterio.size(); i++){
+      sumaNota += conjuntoCriterio[i].getNotaCriterio();
+   }
+   this->notaFinal = sumaNota;
 }
 
 trabajo ActaTrabajo::getTipoTrabajo(){
@@ -56,30 +80,24 @@ estado ActaTrabajo::getEstadoTrabajo(){
 void ActaTrabajo::setEstadoTrabajo( estado estadoTrabajo ){
    this->estadoTrabajo = estadoTrabajo;
 }
-
-
-/*
-void ActaTrabajo::cerrarActa()
-{
-   int actaEscogida, i = 0;
-   system( "CLS()" );
-   cout << "!--Cerrar acta---!\n";
-   cout << "Ingrese el numero de acta: ";
-   cin >> actaEscogida;
-   if( actasCreadas.size() >= i ){
-      cout << "El tamanio:" << actasCreadas.size();
-      for( i = 0; i < actasCreadas.size(); i++){
-         if (  numero == actaEscogida ){
-             estadoTrabajo = CERRADA;
-            cout << "Se ha cerrado el acta\n";
-         }
-      }
-   }else{
-      cout << "No hay suficientes actas";
-   }
-   system( "PAUSE()" );
+string ActaTrabajo::getIdentificador( int tipo ){
+   return conjuntoCriterio[tipo].mostrarIdentificador();
 }
-*/
+
+void ActaTrabajo::setNota( float nota1, float nota2, int tipo ){
+   float nota;
+   nota =(nota1 + nota2) / 2;
+   conjuntoCriterio[tipo].setNota( nota );
+}
+
+void ActaTrabajo::setEstadoAceptacion( aceptacion estado ){
+   this->estadoAceptacion = estado;
+}
+
+void ActaTrabajo::setComentario( string comentario, int tipo ){
+   conjuntoCriterio[tipo].setComentario( comentario );
+}
+
 void ActaTrabajo::calificarCriterios()
 {
 }

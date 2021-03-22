@@ -15,6 +15,10 @@ string Experto::getUsuario(){
    return this->user;
 }
 
+string Experto::getPass(){
+   return this->password;
+}
+
 void Experto::consultarJurados()
 {
    int i, contadorExperto;

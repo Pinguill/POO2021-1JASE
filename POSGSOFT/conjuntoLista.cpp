@@ -382,6 +382,9 @@ void Universidad::cerrarActa()
             vectorActasTrabajos[i].setEstadoTrabajo( CERRADA );
             cout << "\nSe ha cerrado el acta satisfactoriamente\n";
             verificarNumero++;
+            if( vectorActasTrabajos[i].getNotaFinal() <= 35 ){
+               vectorActasTrabajos[i].setEstadoAceptacion( aceptacion::RECHAZADO );
+            }
         }
 
         // Si verificarNumero = 0, significa que el acta no fue encontrada y por ende, no existe
@@ -564,4 +567,61 @@ void Universidad::consultarTrabajosJurado()
     } while( decisionUser != 0 );   // Si es 0, sale de este apartado
 
     system( "PAUSE()" );
+}
+
+void Universidad::diligenciarActa(){
+   int i, codigoSelect, tipo, x, error;
+   float nota1, nota2, notaFinal;
+   string comentario;
+   system("CLS()");
+   cout << "!--- Diligenciar Acta ---! \n";
+   cout << "Ingrese el codigo del acta: \n";
+   cin >> codigoSelect;
+   for( i = 0; i < vectorActasTrabajos.size(); i++){
+      if ( vectorActasTrabajos[i].getNumeroActa() == codigoSelect ){
+         for ( tipo = 0; tipo < 8; tipo++){
+            cout << tipo + 1 << ". "<< vectorActasTrabajos[i].getIdentificador( tipo ) << "\n";
+            while( 1 ){
+               error = 0;
+               cout << "Ingrese la nota del jurado 1 (0.0 - 5.0): \n";
+               cin >> nota1;
+               if( nota1 < 0 || nota1 > 5 ){
+                  cout << "\n\tLo sentimos! La nota se excede de los rangos.\n";
+                  error++;
+               }
+               if( error == 0 ){
+                  break;
+               }
+            }
+            while( 1 ){
+               error = 0;
+               cin.ignore( 100, '\n' );
+               cout << "Ingrese la nota del jurado 2 (0.0 - 5.0): \n";
+               cin >> nota2;
+               if( nota2 < 0 || nota2 > 5 ){
+                  cout << "\n\tLo sentimos! La nota se excede de los rangos.\n";
+                  error++;
+               }
+               if( error == 0 ){
+                  break;
+               }
+            }
+            vectorActasTrabajos[i].setNota( nota1, nota2, tipo );
+            cout << "Ingrese el comentraio del criterio: \n";
+            cin.ignore( 100, '\n' );
+            getline( cin, comentario );
+            vectorActasTrabajos[i].setComentario( comentario, tipo );
+            cout << "\n";
+            x = i;
+            system( "CLS()" );
+         }
+      }
+   }
+   vectorActasTrabajos[x].calcularNotaFinal();
+   notaFinal = vectorActasTrabajos[x].getNotaFinal();
+   if( notaFinal > 3.5 ){
+      vectorActasTrabajos[x].setEstadoAceptacion( aceptacion::ACEPTADO );
+   }
+   cout << "\n!--- Diligenciado completo ---!\n";
+   system("PAUSE()");
 }

@@ -1,5 +1,6 @@
 #ifndef CONJUNTO_H
 #define CONJUNTO_H
+
 #include "experto.h"
 #include "actaTrabajo.h"
 #include "criteriosCalificacion.h"
@@ -34,6 +35,7 @@ class Universidad{
       void consultarTrabajoProfesor(); // Cuales y cuantos trabajos ha dirigido un profesor
       void consultarTrabajosJurado();
       void consultarListaJurados(); // Consultar lista de jurados en las actas sin repetir
+      void diligenciarActa();
 };
 
 #endif

@@ -31,6 +31,9 @@ int main(){
          archivo.cerrarActa();
          break;
       case 6:
+         archivo.diligenciarActa();
+         break;
+      case 7:
          do{
             opc2 = menu2();
 

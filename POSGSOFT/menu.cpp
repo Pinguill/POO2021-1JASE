@@ -10,7 +10,8 @@ int menu(){
    cout << "3. Ingreso jurado" << endl;
    cout << "4. Crear criterios de calificacion" << endl;
    cout << "5. Cerar acta" << endl;
-   cout << "6. Informacion adicional" << endl;
+   cout << "6. Deligenciar criterios"<< endl;
+   cout << "7. Informacion adicional" << endl;
    cout << "0. Salir\n" << endl;
    cout << "Digita el numero: ";
 

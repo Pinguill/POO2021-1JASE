@@ -1,8 +1,11 @@
 #ifndef ACTA_H
 #define ACTA_H
+
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <iostream>
+#include "criteriosCalificacion.h"
 
 using std::string;
 using std::vector;
@@ -45,6 +48,7 @@ class ActaTrabajo
         string jurado2;    
         estado estadoTrabajo;   // Hace referencia a si el acta está abierta o cerrada
         aceptacion estadoAceptacion;    // Significa si está aprobado, rechazado o pendiente
+        vector <Criterio> conjuntoCriterio;
     public:
         ActaTrabajo();
         ActaTrabajo( int, string, string, string, trabajo, string, string, string, string, string, estado, aceptacion );
@@ -63,6 +67,12 @@ class ActaTrabajo
         void setEstadoTrabajo( estado );
         string getJuradoUno();
         string getJuradoDos();
+        string getIdentificador( int );
+        void setNota( float, float, int );
+        void setComentario( string, int ); 
+        void calcularNotaFinal();
+        float getNotaFinal();
+        void setEstadoAceptacion( aceptacion );
 };
 
 #endif
