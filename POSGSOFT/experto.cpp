@@ -19,43 +19,20 @@ string Experto::getPass(){
    return this->password;
 }
 
-void Experto::consultarJurados()
+string Experto::getNombre(){
+   return this->nombre;
+}
+
+int Experto::consultarJurados()
 {
-   int i, contadorExperto;
-   /*
-      i es un iterador.
-      contadorExperto será para validar un mensaje especial en caso que no hayan jurados internos y/o externos
-      En ambos casos, si el contador es 0, significa que no hay jurado interno o externo. Se evalua individualmente
-   */ 
+   bool esInterno;
 
-   system( "CLS()");
-   cout << "\nJurados internos: " << std::endl;
-   contadorExperto = 0;
-
-   if( sector == INTERNO )
+   if( sector == INTERNO ) // Primero miramos del sector Interno
    {
-      cout << nombre << std::endl;
-      contadorExperto++;  
+      return true;   // Si es interno, devolvemos true
    }
-   if( contadorExperto == 0 )    // Si el contador es 0, no hay jurados internos
+   else
    {
-      cout << "\nActualmente no hay ningun jurado interno" << std::endl;
+      return false;
    }
-
-   cout << '\n';
-   cout << "\nJurados externos: " << std::endl;
-   contadorExperto = 0;
-   
-   if( sector == EXTERNO )
-   {
-      cout << nombre << std::endl;
-      contadorExperto++;
-   }
-
-   if( contadorExperto == 0 )
-   {
-      cout << "\nActualmente no hay ningun jurado externo" << std::endl;
-   }
-   
-   cout << '\n';
 }
