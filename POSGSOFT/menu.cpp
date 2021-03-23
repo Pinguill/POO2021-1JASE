@@ -38,6 +38,7 @@ int menu2()
    cout << "3. Jurados externos e internos" << endl;
    cout << "4. Trabajos dirigidos por profesor" << endl;
    cout << "5. Trabajos en los que ha participado un jurado " << endl;
+   cout << "6. Lista de jurados (sin repetir)" << endl;
    cout << "0. Salir\n" << endl;
    cout << "Digita el numero: ";
 

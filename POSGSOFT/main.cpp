@@ -61,6 +61,8 @@ int main(){
             case 5:
                archivo.consultarTrabajosJurado();
                break;
+            case 6:
+               archivo.consultarListaJurados();
             case 0:
                break;
             default:

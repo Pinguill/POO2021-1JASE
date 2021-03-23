@@ -20,8 +20,9 @@ class Universidad{
    private:
       int contadorTrabajoAplicado = 0; 
       int contadorTrabajoInvestigacion= 0;
-      vector <Experto> vectorPersonas;
-      vector <ActaTrabajo> vectorActasTrabajos;
+      vector <Experto> vectorPersonas; // Almacena a los jurados
+      vector <ActaTrabajo> vectorActasTrabajos; // Almacena las actas
+      
 
    public:
       Universidad();
@@ -37,10 +38,10 @@ class Universidad{
       void consultarTrabajoProfesor(); // Cuales y cuantos trabajos ha dirigido un profesor
       void consultarTrabajosJurado();
       void consultarListaJurados(); // Consultar lista de jurados en las actas sin repetir
-      void diligenciarActa();
-      void diligenciarObservaciones();
+      void diligenciarActa(); // Ingresar criterios a las actas
+      void diligenciarObservaciones(); //observaciones adicionales si se solicita
       void eliminarActa();
-      void crearTxt();
+      void crearTxt(); // Guardar el acta en un archivo txt
 };
 
 #endif

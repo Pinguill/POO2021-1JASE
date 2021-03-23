@@ -11,11 +11,6 @@ using std::cout;
 using std::cin;
 
 
-enum ingreso   // Verifica si el experto se ha registrado
-{
-   REGISTRADO,
-   NO_REGISTRADO
-};
 
 enum sectorExperto   // Indica si el jurado es profesor de universidad o no
 {
@@ -30,15 +25,15 @@ class Experto{
       sectorExperto sector;   // Se refiere a si el jurado es interno o externo, lo cambié de Bool a Enum
       string nombre;
       int trabajosDirigidos = 0;
-      ingreso registro;
 
    public:
       Experto();
       Experto( string, string, sectorExperto, string );
-      void consultarJurados(); // Consulta jurados externos e internos
+      int consultarJurados(); // Consulta jurados externos e internos
       void getExperto();
       string getUsuario();
       string getPass();
+      string getNombre();
 };
 
 #endif
