@@ -8,18 +8,13 @@ void Universidad::mostrarActas(){
    int i;
    
    // Miramos si no está vacía
-   if( vectorActasTrabajos.empty() )
-   {
+   if( vectorActasTrabajos.empty() == false ){
       // Recorre el vector e imprime
       for ( i = 0; i < vectorActasTrabajos.size(); i++){
          vectorActasTrabajos[i].mostrarActa();
       }
    }
-   // Si está vacía, arroja un mensaje especial
-   else
-   {
-       cout << "\nLo sentimos! No hay actas creadas\n" << endl;
-   }
+   
    system( "PAUSE()");
 }
 

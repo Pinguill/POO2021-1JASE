@@ -136,7 +136,6 @@ void ActaTrabajo::setComentario( string comentario, int tipo ){
 }
 
 void ActaTrabajo::mostrarActa(){
-   system( "CLS()" );
    cout << "!--- Actas ---!\n";
    cout << "Numero acta: " << numero << "\n";
    cout << "Fecha: " <<  fecha << "\n";
@@ -169,7 +168,6 @@ void ActaTrabajo::mostrarActa(){
       cout << "Estado aceptacion: Pendiente\n";
    }
    cout << endl;
-   system("PAUSE()");
 }
 
 string ActaTrabajo::getDirector()
