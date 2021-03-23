@@ -110,6 +110,10 @@ int ActaTrabajo::getNumeroActa(){
    return this->numero;
 }
 
+string ActaTrabajo::getFecha(){
+   return this->fecha;
+}
+
 estado ActaTrabajo::getEstadoTrabajo(){
    return this->estadoTrabajo;
 }

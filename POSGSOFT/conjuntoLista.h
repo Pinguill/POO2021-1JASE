@@ -18,6 +18,7 @@ using std::ofstream;
 
 class Universidad{
    private:
+      int contActas = 1000;
       int contadorTrabajoAplicado = 0; 
       int contadorTrabajoInvestigacion= 0;
       vector <Experto> vectorPersonas; // Almacena a los jurados

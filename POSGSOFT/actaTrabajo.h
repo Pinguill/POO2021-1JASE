@@ -79,6 +79,7 @@ class ActaTrabajo
         float getPonderado( int );
         string getObservacion();
         string getComentario( int );
+        string getFecha();
 };
 
 #endif

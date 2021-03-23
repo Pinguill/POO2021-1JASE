@@ -13,6 +13,8 @@ void Universidad::mostrarActas(){
       for ( i = 0; i < vectorActasTrabajos.size(); i++){
          vectorActasTrabajos[i].mostrarActa();
       }
+   }else{
+      cout << "No hay actas para mostar\n";
    }
    
    system( "PAUSE()");
@@ -22,7 +24,7 @@ void Universidad::crearActa()
 {
     char* fecha;
     string autor, nombreTrabajo, director, codirector, jurado1, jurado2, periodo;
-    int i = 0, numero = 1000; // Contador del numero de acta
+    int i = 0, numero = this->contActas; // Contador del numero de acta
     time_t now = time( 0 );
     char* dt = ctime( &now ); // Dt = day time, pasa la hora/dia actual a un char
     int opcTipoTrabajo; // Opción dada en el menú para mirar el tipo de trabajo (aplicado - investigacion)
@@ -33,7 +35,6 @@ void Universidad::crearActa()
     aceptacion estadoAceptacion;    // Pendiente-Rechazado-Aceptado
     estado estadoTrabajo;   // Abierto - Cerrado
     fecha = dt;
-    numero++;  // Número del acta incrementa en 1 cada vez que se crea una
 
     system( "CLS()" );
     cout << "\n!---Ingrese los siguientes datos---!\n";
@@ -201,6 +202,7 @@ void Universidad::crearActa()
     estadoTrabajo = estado::ABIERTA;
     ActaTrabajo newActa( numero, fecha, autor, nombreTrabajo, tipoTrabajo, periodo, director, codirector, jurado1, jurado2, estadoTrabajo, estadoAceptacion );
     this->vectorActasTrabajos.push_back( newActa ); // Aquí la agregamos al vecto de actastrabajos
+    contActas++;
 
     system( "PAUSE()" );
     system( "CLS()" );
@@ -543,10 +545,10 @@ void Universidad::cerrarActa()
             verificarNumero++;
 
             // Si la nota final es menor a 3.5, es rechazado, si es mayor o igual, aceptado 
-            if( vectorActasTrabajos[i].getNotaFinal() < 35 ){
+            if( vectorActasTrabajos[i].getNotaFinal() <= 3.5 ){
                vectorActasTrabajos[i].setEstadoAceptacion( aceptacion::RECHAZADO );
             }
-            else{
+            else if( vectorActasTrabajos[i].getNotaFinal() > 3.5 ){
                vectorActasTrabajos[i].setEstadoAceptacion( aceptacion::ACEPTADO ); 
             }
         }
@@ -794,7 +796,7 @@ void Universidad::consultarListaJurados()
 }
 
 void Universidad::diligenciarActa(){
-   int i, codigoSelect, tipo, x, error;
+   int i, codigoSelect, tipo, x, error = 0;
    float nota1, nota2, notaFinal;
    string comentario;
 
@@ -865,14 +867,21 @@ void Universidad::diligenciarActa(){
             x = i;
             system( "CLS()" );
          }
+         error = 1;
       }
    }
-   vectorActasTrabajos[x].calcularNotaFinal();
-   notaFinal = vectorActasTrabajos[x].getNotaFinal();
-   if( notaFinal > 3.5 ){
-      vectorActasTrabajos[x].setEstadoAceptacion( aceptacion::ACEPTADO );
+   if ( error == 1 ){
+      vectorActasTrabajos[x].calcularNotaFinal();
+      notaFinal = vectorActasTrabajos[x].getNotaFinal();
+      if( notaFinal > 3.5 ){
+         vectorActasTrabajos[x].setEstadoAceptacion( aceptacion::ACEPTADO );
+      }
+      cout << "\n!--- Diligenciado completo ---!\n";
+   }else{
+      cout << "Error de numero ingresado\n";
    }
-   cout << "\n!--- Diligenciado completo ---!\n";
+   
+   
    system("PAUSE()");
 }
 
@@ -943,9 +952,9 @@ void Universidad::crearTxt(){
          cin.ignore( 100, '\n' );
          cin >> nombreArchivo;
          ofstream archivoActa( nombreArchivo );
-         archivoActa << this->vectorActasTrabajos[i].getNumeroActa() << "         " << this->vectorActasTrabajos[i].getNumeroActa() << endl;
+         archivoActa << "Numero Acta: " <<this->vectorActasTrabajos[i].getNumeroActa() << "                     " << this->vectorActasTrabajos[i].getFecha() << endl;
          archivoActa << "         ACTA DE EVALUACION DE TRABAJO DE GRADO" << endl;
-         archivoActa << "         " << this->vectorActasTrabajos[i].getNombreTrabajo() << endl;
+         archivoActa << "            " << this->vectorActasTrabajos[i].getNombreTrabajo() << endl;
          archivoActa << "Autor: "<< this->vectorActasTrabajos[i].getAutor() << endl;
          archivoActa << "Periodo: "<< this->vectorActasTrabajos[i].getPeriodo() << endl;
          archivoActa << "Director: "<< this->vectorActasTrabajos[i].getDirector() << endl;
