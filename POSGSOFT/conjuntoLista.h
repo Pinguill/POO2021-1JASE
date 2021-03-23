@@ -22,7 +22,6 @@ class Universidad{
       int contadorTrabajoInvestigacion= 0;
       vector <Experto> vectorPersonas;
       vector <ActaTrabajo> vectorActasTrabajos;
-      vector <Criterio> vectorCriterios;
 
    public:
       Universidad();
